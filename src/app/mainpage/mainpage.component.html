@@ -1,6 +1,9 @@
 <p>searh bar</p>
-<div class="form-group">
-    <label for="usr">Name:</label>
-    <input type="text" class="form-control" id="usr">
-  </div>
-  <button class="btn btn-primary" routerLink="/resultpage" type="submit">Button</button>
+
+<label>
+  Name:
+  <input type="text" [formControl]="name">
+</label>
+
+  <button class="btn btn-primary" (click)='getsearch()' >Button</button>
+

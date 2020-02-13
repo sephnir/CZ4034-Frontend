@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultpageComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    let test = history.state.data;
+
+   }
 
   ngOnInit() {
   }

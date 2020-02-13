@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import {APIservice} from '../api.service';
+import { Router } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-mainpage',
@@ -6,8 +11,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mainpage.component.scss']
 })
 export class MainpageComponent implements OnInit {
+   name;
+   url;
+   datac;
 
-  constructor() { }
+
+  constructor(private _api: APIservice, private router:Router) {
+    this.name = new FormControl('');
+    this.url = "http://www.mocky.io/v2/5e44c26230000069006145f7";
+
+   }
+   getsearch(){
+     this._api.getApps(this.url).subscribe(
+       data => {this.datac = data;},
+       err => console.error(err), 
+       () => 
+       {
+       console.log('done loading APPS');
+       this.router.navigate(['/resultpage'],{state: {data: this.datac}});
+        }
+       ); 
+  }
+
 
   ngOnInit() {
   }

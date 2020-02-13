@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {AppRoutingModule,routingcomponents} from './app.router.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import {APIservice} from './api.service';
+
 
 
 @NgModule({
@@ -10,7 +14,11 @@ import {AppRoutingModule,routingcomponents} from './app.router.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule
+
   ],
   providers: [],
   bootstrap: [routingcomponents[0]]

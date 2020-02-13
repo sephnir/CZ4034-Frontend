@@ -4,13 +4,11 @@ import { NgModule }              from '@angular/core';
 
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { ResultpageComponent } from './resultpage/resultpage.component';
-import {XyzComponent} from './xyz/xyz.component';
 import {RootpageComponent} from './rootpage/rootpage.component';
 
 const appRoutes: Routes = [
     { path: 'mainpage', component: MainpageComponent },
     { path: 'resultpage', component: ResultpageComponent },
-    { path: 'xyz', component: XyzComponent },
     { path: '',   redirectTo: '/mainpage', pathMatch: 'full' },
   ];
   
@@ -28,4 +26,4 @@ const appRoutes: Routes = [
   })
 
   export class AppRoutingModule {}
-  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent,XyzComponent]
+  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent]
