@@ -5,6 +5,7 @@ import { NgModule }              from '@angular/core';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import {RootpageComponent} from './rootpage/rootpage.component';
+import {IndividualresultComponent} from './individualresult/individualresult.component';
 
 const appRoutes: Routes = [
     { path: 'mainpage', component: MainpageComponent },
@@ -26,4 +27,4 @@ const appRoutes: Routes = [
   })
 
   export class AppRoutingModule {}
-  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent]
+  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent,IndividualresultComponent]

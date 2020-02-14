@@ -1,9 +1,13 @@
 <p>searh bar</p>
 
-<label>
+<label >
   Name:
-  <input type="text" [formControl]="name">
 </label>
+
+  <div>
+    <input type="text" [formControl]="name" class="form-control-lg col-lg-5">
+  </div>
+
 
   <button class="btn btn-primary" (click)='getsearch()' >Button</button>
 

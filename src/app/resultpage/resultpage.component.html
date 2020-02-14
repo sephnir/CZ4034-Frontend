@@ -1,1 +1,6 @@
-<p>resultpage works!</p>
+<app-individualresult
+    *ngFor = "let item of resultlist"
+    [resultinstance] ="item">
+    </app-individualresult>
+
+<app-mainpage></app-mainpage>

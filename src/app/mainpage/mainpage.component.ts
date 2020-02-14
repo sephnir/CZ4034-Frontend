@@ -8,13 +8,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-mainpage',
   templateUrl: './mainpage.component.html',
-  styleUrls: ['./mainpage.component.scss']
+  styleUrls: ['./mainpage.component.css']
 })
 export class MainpageComponent implements OnInit {
    name;
-   url;
-   datac;
-
+   url : String;
+   private datac;
 
   constructor(private _api: APIservice, private router:Router) {
     this.name = new FormControl('');

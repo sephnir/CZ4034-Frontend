@@ -15,9 +15,10 @@ export class ResultpageComponent implements OnInit {
 
     for (let entry of length){
       let current = jsonlist[entry];
-      this.resultlist.push( new appresult(current.id,current.title));
+      this.resultlist.push( new appresult(current.id,current.title,current.icon));
     }
     console.log(this.resultlist);
+    console.log('TEST')
    }
 
   ngOnInit() {
