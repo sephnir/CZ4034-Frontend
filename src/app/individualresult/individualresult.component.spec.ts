@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { IndividualresultComponent } from './individualresult.component';
+import { IndividualresultComponent } from "./individualresult.component";
 
-describe('IndividualresultComponent', () => {
-  let component: IndividualresultComponent;
-  let fixture: ComponentFixture<IndividualresultComponent>;
+describe("IndividualresultComponent", () => {
+	let component: IndividualresultComponent;
+	let fixture: ComponentFixture<IndividualresultComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ IndividualresultComponent ]
-    })
-    .compileComponents();
-  }));
+	beforeEach(async(() => {
+		TestBed.configureTestingModule({
+			declarations: [IndividualresultComponent]
+		}).compileComponents();
+	}));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IndividualresultComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+	beforeEach(() => {
+		fixture = TestBed.createComponent(IndividualresultComponent);
+		component = fixture.componentInstance;
+		fixture.detectChanges();
+	});
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+	it("should create", () => {
+		expect(component).toBeTruthy();
+	});
 });

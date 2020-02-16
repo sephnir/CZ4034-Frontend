@@ -1,13 +1,11 @@
-<p>searh bar</p>
+<div class="main d-block">
+	<div class="logo">
+		<h1 class="text-center">
+			Logo Here
+		</h1>
+	</div>
 
-<label >
-  Name:
-</label>
-
-  <div>
-    <input type="text" [formControl]="name" class="form-control-lg col-lg-5">
-  </div>
-
-
-  <button class="btn btn-primary" (click)='getsearch()' >Button</button>
-
+	<div class="search card align-middle mx-auto">
+		<app-searchbar></app-searchbar>
+	</div>
+</div>

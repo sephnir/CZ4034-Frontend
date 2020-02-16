@@ -1,0 +1,21 @@
+.inputclass {
+	border-style: dashed;
+	border-width: 10px;
+	display: block;
+}
+
+.main {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 20%;
+	transform: translate(-50%, -50%);
+}
+
+.search {
+	padding: 20px;
+}
+
+.logo {
+	margin-bottom: 100px;
+}

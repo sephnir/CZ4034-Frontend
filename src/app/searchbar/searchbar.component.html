@@ -1,0 +1,13 @@
+<div>
+	<form class="form-group input-group m-0" (submit)="search()">
+		<input
+			type="text"
+			class="form-control searchbar"
+			placeholder="Search terms"
+			(keyup)="update($event)"
+		/>
+		<div class="input-group-append">
+			<button type="submit" class="btn btn-primary">Search</button>
+		</div>
+	</form>
+</div>

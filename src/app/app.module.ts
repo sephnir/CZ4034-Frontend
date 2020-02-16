@@ -4,12 +4,14 @@ import {AppRoutingModule,routingcomponents} from './app.router.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import {APIservice} from './api.service';
+import { SearchbarComponent } from './searchbar/searchbar.component';
 
 
 
 @NgModule({
   declarations: [
-    routingcomponents
+    routingcomponents,
+    SearchbarComponent
     
   ],
   imports: [

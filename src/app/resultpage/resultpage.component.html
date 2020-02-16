@@ -1,6 +1,17 @@
-<app-individualresult
-    *ngFor = "let item of resultlist"
-    [resultinstance] ="item">
-    </app-individualresult>
+<div class="main">
+	<div class="search col-4">
+		<app-searchbar></app-searchbar>
+	</div>
 
-<app-mainpage></app-mainpage>
+	<hr />
+
+	<p>
+		Displaying results for <b>{{ search }}</b>
+	</p>
+
+	<app-individualresult
+		*ngFor="let item of resultList"
+		[resultinstance]="item"
+	>
+	</app-individualresult>
+</div>
