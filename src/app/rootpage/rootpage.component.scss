@@ -1,0 +1,42 @@
+.h{	background: linear-gradient(40deg,#70cc3c, #4b654d, #79997b);
+	background-size: 400% 400%;
+	-webkit-animation: AnimationName 27s ease infinite;
+	-moz-animation: AnimationName 27s ease infinite;
+	-o-animation: AnimationName 27s ease infinite;
+    animation: AnimationName 27s ease infinite;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow:scroll;
+}
+
+
+
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-webkit-keyframes AnimationName {
+    0%{background-position:99% 0%}
+    50%{background-position:2% 100%}
+    100%{background-position:99% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:99% 0%}
+    50%{background-position:2% 100%}
+    100%{background-position:99% 0%}
+}
+@-o-keyframes AnimationName {
+    0%{background-position:99% 0%}
+    50%{background-position:2% 100%}
+    100%{background-position:99% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:99% 0%}
+    50%{background-position:2% 100%}
+    100%{background-position:99% 0%}
+}
+

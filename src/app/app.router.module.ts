@@ -6,6 +6,8 @@ import { MainpageComponent } from './mainpage/mainpage.component';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import {RootpageComponent} from './rootpage/rootpage.component';
 import {IndividualresultComponent} from './individualresult/individualresult.component';
+import { SearchbarComponent } from './searchbar/searchbar.component';
+
 
 const appRoutes: Routes = [
     { path: 'mainpage', component: MainpageComponent },
@@ -27,4 +29,4 @@ const appRoutes: Routes = [
   })
 
   export class AppRoutingModule {}
-  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent,IndividualresultComponent]
+  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent,IndividualresultComponent,SearchbarComponent]

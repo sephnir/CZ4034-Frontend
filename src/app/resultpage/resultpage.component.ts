@@ -39,7 +39,7 @@ export class ResultpageComponent implements OnInit {
 		for (let entry of length) {
 			let current = this.jsonList[entry];
 			this.resultList.push(
-				new appresult(current.id, current.title, current.icon)
+				new appresult(current.id, current.title , current.icon)
 			);
 		}
 
