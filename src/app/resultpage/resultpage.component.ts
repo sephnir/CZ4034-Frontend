@@ -12,10 +12,38 @@ export class ResultpageComponent implements OnInit {
 	search: string;
 	jsonList: JSON;
 	resultList: appresult[] = [];
+	sortingmethods:string[];
+	sortingselected: string;
+
 
 	constructor(private _api: APIservice) {
 		this.search = <string>history.state.data;
+		this.sortingmethods = ["Relevance","Alphabetical","Score"]
+		this.sortingselected = this.sortingmethods[0];
 		this.fetch();
+	}
+
+	sortArray(){
+		switch(this.sortingselected){
+			case "Score": this.sortScore(); break;
+			case "Alphabetical": this.sortAlphabet(); break;
+		}
+	}
+
+	sortScore(){
+		this.resultList.sort(function(a:appresult, b:appresult){
+			if(a.score > b.score) return 1;
+			if(a.score < b.score) return -1;
+			return 0;
+		});
+	}
+
+	sortAlphabet(){
+		this.resultList.sort(function(a:appresult, b:appresult){
+			if(a.name > b.name) return 1;
+			if(a.name < b.name) return -1;
+			return 0;
+		});
 	}
 
 	/**
@@ -39,7 +67,7 @@ export class ResultpageComponent implements OnInit {
 		for (let entry of length) {
 			let current = this.jsonList[entry];
 			this.resultList.push(
-				new appresult(current.id, current.title , current.icon)
+				new appresult(current.id, current.title , current.icon,current.size)
 			);
 		}
 

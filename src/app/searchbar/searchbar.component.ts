@@ -8,12 +8,20 @@ import { Router, NavigationExtras } from "@angular/router";
 })
 export class SearchbarComponent implements OnInit {
 	searchVal: string;
-	constructor(private router: Router) {}
+	dropDown: string[];
+	catstring: String;
+
+	constructor(private router: Router) {
+		this.dropDown = ["All","Category A","Category B"];
+		this.catstring = this.dropDown[0];
+	}
 
 	/**
 	 * Update searchVal
 	 * @param event
 	 */
+
+	
 	update(event: any) {
 		this.searchVal = event.target.value;
 
@@ -48,6 +56,12 @@ export class SearchbarComponent implements OnInit {
 			.navigateByUrl("/", { skipLocationChange: true })
 			.then(() => this.router.navigate(uri, data));
 	}
+
+
+	setcat(){
+		
+	}
+
 
 	ngOnInit() {}
 }

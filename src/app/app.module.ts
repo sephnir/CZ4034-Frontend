@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
   declarations: [
     routingcomponents,
     
+    
   ],
   imports: [
     BrowserModule,

@@ -5,9 +5,16 @@
 
 	<hr />
 
+	<div>
 	<p>
 		Displaying results for <b>{{ search }}</b>
 	</p>
+	<div>
+		<select class="btn btn-secondary dropdown-toggle" (change) = "sortArray()" [(ngModel)]="sortingselected">
+			<option *ngFor="let sortitem of sortingmethods"  [value]="sortitem">{{sortitem}}</option>
+		  </select>
+		</div>
+	</div>
 
 	<app-individualresult
 		*ngFor="let item of resultList"

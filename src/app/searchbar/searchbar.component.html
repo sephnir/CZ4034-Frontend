@@ -1,4 +1,11 @@
 <div>
+		<div>
+		<select class="btn btn-secondary dropdown-toggle" [(ngModel)]="catstring">
+			<option *ngFor="let category of dropDown"  [value]="category">{{category}}</option>
+		  </select>
+		</div>
+
+
 	<form class="form-group input-group m-0" (submit)="search()">
 		<input
 			type="text"
@@ -9,5 +16,6 @@
 		<div class="input-group-append">
 			<button type="submit" class="btn btn-primary">Search</button>
 		</div>
+		
 	</form>
 </div>
