@@ -10,16 +10,18 @@ import { APIservice } from "../api.service";
 export class ResultpageComponent implements OnInit {
 	private readonly url = "http://www.mocky.io/v2/5e44e565300000393061469e";
 	search: string;
-	jsonList: JSON;
+	jsonList: any;
 	resultList: appresult[] = [];
 	sortingmethods:string[];
 	sortingselected: string;
-
+	suggestionExist: boolean;
+	suggestion: string;
 
 	constructor(private _api: APIservice) {
 		this.search = <string>history.state.data;
 		this.sortingmethods = ["Relevance","Alphabetical","Score"]
 		this.sortingselected = this.sortingmethods[0];
+		this.suggestionExist = false;
 		this.fetch();
 	}
 
@@ -46,6 +48,12 @@ export class ResultpageComponent implements OnInit {
 		});
 	}
 
+	correctlyspelled(){
+		this.suggestionExist = ! this.jsonList.spellcheck.correctlySpelled;
+		this.suggestion = this.jsonList.spellcheck.suggestions[1].suggestion[0].word;
+		
+	}
+
 	/**
 	 * Fetch data from backend
 	 */
@@ -53,8 +61,12 @@ export class ResultpageComponent implements OnInit {
 		this._api.getApps(this.url).subscribe(
 			data => (this.jsonList = <JSON>data),
 			err => console.error(err),
-			() => this.update()
+			() => {
+				this.update();
+				this.correctlyspelled()
+			}
 		);
+		//
 	}
 
 	/**
@@ -70,9 +82,7 @@ export class ResultpageComponent implements OnInit {
 				new appresult(current.id, current.title , current.icon,current.size)
 			);
 		}
-
 		console.log(this.resultList);
-		console.log("TEST");
 	}
 
 	ngOnInit() {}

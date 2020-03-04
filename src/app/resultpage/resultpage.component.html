@@ -9,6 +9,9 @@
 	<p>
 		Displaying results for <b>{{ search }}</b>
 	</p>
+	<p *ngIf="suggestionExist" >
+		Do you mean <a>{{suggestion}}</a>?
+	</p>
 	<div>
 		<select class="btn btn-secondary dropdown-toggle" (change) = "sortArray()" [(ngModel)]="sortingselected">
 			<option *ngFor="let sortitem of sortingmethods"  [value]="sortitem">{{sortitem}}</option>

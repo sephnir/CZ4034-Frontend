@@ -11,6 +11,6 @@ export class APIservice {
 
 	// Uses http.get() to load data from a single API endpoint
 	getApps(url: string) {
-		return this.http.get(url);
+		return this.http.get(url); 
 	}
 }
