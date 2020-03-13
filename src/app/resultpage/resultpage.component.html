@@ -24,4 +24,8 @@
 		[resultinstance]="item"
 	>
 	</app-individualresult>
+	
+	<hr />
+	<a *ngFor="let item of pageRange" (click)="changePage(item)" >{{item}}</a>
 </div>
+

@@ -17,31 +17,9 @@ export class SearchbarComponent implements OnInit {
 	
 
 	constructor(private router: Router,private _api: APIservice) {
-		this.dropDown = ["All","Category A","Category B"];
+		this.dropDown = ["All","Apps","Reviews"];
 		this.catstring = this.dropDown[0];
-		this.jsonList = {
-			"responseHeader":{
-			  "status":0,
-			  "QTime":0},
-			"suggest":{"mySuggester":{
-				"tic":{
-				  "numFound":4,
-				  "suggestions":[{
-					  "term":"Ticketmaster－Buy, Sell Tickets to Concerts, Sports",
-					  "weight":0,
-					  "payload":""},
-					{
-					  "term":"TikTok - Make Your Day",
-					  "weight":0,
-					  "payload":""},
-					{
-					  "term":"TikTok Wall Picture",
-					  "weight":0,
-					  "payload":""},
-					{
-					  "term":"Tinder",
-					  "weight":0,
-					  "payload":""}]}}}};
+		this.jsonList = {};
 	}
 
 	updatesearch(value: string){
@@ -52,20 +30,22 @@ export class SearchbarComponent implements OnInit {
 		if(value === ""){
 			this.suggestionlist =[]
 		}
-		/*
+		
 		var url = "http://18.141.144.113:8983/solr/appreviews/autocomplete?q="+value;
-		console.log(url)
 		this._api.getApps(url).subscribe(
-			data => (this.jsonList = <JSON>data),
-			err => console.error(err)
-		);*/
-		else{
-		this.autocompletestrip('tic');}
+			data => {
+				(this.jsonList = <JSON>data)
+			} ,
+			err => console.error(err),
+			() => {
+				this.autocompletestrip(value);
+			}
+		);
+
 	}
 
 	autocompletestrip(value: string){
 		this.suggestionlist = this.jsonList.suggest.mySuggester[value].suggestions;
-		console.log(this.suggestionlist);
 	}
 	
 	/**
@@ -98,7 +78,11 @@ export class SearchbarComponent implements OnInit {
 		}
 
 		this.redirectTo(["/resultpage"], {
-			state: { data: this.searchVal }
+			state: { 
+				data: this.searchVal ,
+				category: this.catstring,
+				currentpage: 1
+			}
 		});
 	}
 

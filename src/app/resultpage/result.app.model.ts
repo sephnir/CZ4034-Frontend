@@ -1,13 +1,16 @@
 export class appresult{
-    id: number
-    name: String
-    icon : String
-    score: number
+    icon: String
+    title: String
+    description : String
+    genre: String
+    scoreText: String
 
-    constructor(id,name,icon,score){
-        this.id = id
-        this.name = name
+
+    constructor(icon,title,description,genre,scoreText){
         this.icon = icon
-        this.score = score
+        this.title = title
+        this.description = description
+        this.genre = genre
+        this.scoreText = scoreText
     }
 }

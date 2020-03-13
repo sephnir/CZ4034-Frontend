@@ -1,0 +1,24 @@
+Apps
+-query the app url <- [APPS]
+-query the reviews for each app and display said result in that column
+
+http://18.141.144.113:8983/solr/apps/query?q=tiktok -> to the app 
+
+
+http://18.141.144.113:8983/solr/appreviews/query?q=tiktok&rows=10000000
+
+
+http://18.141.144.113:8983/solr/appreviews/query?q=appName%3ATikTok%20Wall%20Picture&rows=61
+
+
+18.141.144.113:8983/solr/appreviews/autocomplete?q=ti
+
+Review
+-help
+            [Description] [REVIEW]
+[APPIMAGE]  <>
+
+
+TODO - by sunday:
+Finish page number
+Finish The description and review component 
