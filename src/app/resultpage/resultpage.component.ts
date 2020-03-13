@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { appresult } from "./result.app.model";
+import { Router, NavigationExtras } from "@angular/router";
 import { APIservice } from "../api.service";
 
 @Component({
