@@ -9,35 +9,38 @@ import { APIservice } from "../api.service";
 	styleUrls: ["./resultpage.component.scss"]
 })
 export class ResultpageComponent implements OnInit {
-	private readonly reviewUrl="http://18.141.144.113:8983/solr/appreviews/query?q=";
+	private readonly reviewUrl =
+		"http://18.141.144.113:8983/solr/appreviews/query?q=";
 	private readonly appUrl = "http://18.141.144.113:8983/solr/apps/query?q=";
 	search: string;
 	jsonList: any;
 	resultList: appresult[] = [];
-	sortingmethods:string[];
+	sortingmethods: string[];
 	sortingselected: string;
 	suggestionExist: boolean;
 	suggestion: string;
-	category : string;
+	category: string;
 	currentpage: number;
 	pagenum: number;
 	pageRange: number[];
 
-	constructor(private _api: APIservice) {
+	constructor(private router: Router, private _api: APIservice) {
 		this.search = <string>history.state.data;
 		this.category = <string>history.state.category;
 		this.currentpage = <number>history.state.currentpage;
-		this.sortingmethods = ["Relevance","Alphabetical","Score"]
+		this.sortingmethods = ["Relevance", "Alphabetical", "Score"];
 		this.sortingselected = this.sortingmethods[0];
 		this.suggestionExist = false;
 		this.pagenum;
 		this.fetch();
 	}
 
-	sortArray(){
-		switch(this.sortingselected){
+	sortArray() {
+		switch (
+			this.sortingselected
 			//case "Score": this.sortScore(); break;
 			//case "Alphabetical": this.sortAlphabet(); break;
+		) {
 		}
 	}
 
@@ -58,10 +61,9 @@ export class ResultpageComponent implements OnInit {
 	// 	});
 	// }
 
-	correctlyspelled(){
-		this.suggestionExist = ! this.jsonList.spellcheck.correctlySpelled;
+	correctlyspelled() {
+		this.suggestionExist = !this.jsonList.spellcheck.correctlySpelled;
 		this.suggestion = this.jsonList.spellcheck.suggestions[1].suggestion[0].word;
-		
 	}
 
 	/**
@@ -69,18 +71,18 @@ export class ResultpageComponent implements OnInit {
 	 */
 	fetch() {
 		let urlStr = "";
-		switch(this.category){
-			case("Apps"):
-				urlStr = this.appUrl + this.search 
+		switch (this.category) {
+			case "Apps":
+				urlStr = this.appUrl + this.search;
 				break;
-			case("Reviews"): 
-				urlStr = this.reviewUrl + this.search
+			case "Reviews":
+				urlStr = this.reviewUrl + this.search;
 				break;
-			case("All"): 
+			case "All":
 				break;
 		}
 		let nextrow = this.currentpage * 10;
-		let previousrow = nextrow -10;
+		let previousrow = nextrow - 10;
 		urlStr += `&rows=${nextrow}&start=${previousrow}`;
 		console.log(urlStr);
 		this._api.getApps(urlStr).subscribe(
@@ -88,7 +90,7 @@ export class ResultpageComponent implements OnInit {
 				this.jsonList = data;
 				this.amountofpages();
 				this.responseStrip();
-			},				
+			},
 			err => console.error(err),
 			() => {
 				console.log(urlStr);
@@ -99,24 +101,24 @@ export class ResultpageComponent implements OnInit {
 		//
 	}
 
-	responseStrip(){
+	responseStrip() {
 		this.jsonList = this.jsonList.response.docs;
 	}
-	
-	amountofpages(){
+
+	amountofpages() {
 		this.pagenum = Math.floor(this.jsonList.response.numFound / 10);
-		let remainder = (<number>this.pagenum) % 10;
-		if (remainder > 0){
+		let remainder = <number>this.pagenum % 10;
+		if (remainder > 0) {
 			this.pagenum += 1;
 		}
-		console.log(this.pagenum)
-		this.pageRange = Array.from(Array(this.pagenum).keys()).map(i => i+1);
+		console.log(this.pagenum);
+		this.pageRange = Array.from(Array(this.pagenum).keys()).map(i => i + 1);
 	}
-	
-	changePage(page){
+
+	changePage(page) {
 		this.redirectTo(["/resultpage"], {
-			state: { 
-				data: this.search ,
+			state: {
+				data: this.search,
 				category: this.category,
 				currentpage: page
 			}
@@ -133,14 +135,20 @@ export class ResultpageComponent implements OnInit {
 	 * Update fetched data
 	 */
 	update() {
-		console.log("JSON"+<JSON>this.jsonList)
+		console.log("JSON" + <JSON>this.jsonList);
 		let length = Object.keys(this.jsonList);
 		this.resultList = [];
 		for (let entry of length) {
 			let current = this.jsonList[entry];
 			this.resultList.push(
-				new appresult(current.icon[0], current.title , current.description,current.genre,current.scoreText)
-			); 
+				new appresult(
+					current.icon[0],
+					current.title,
+					current.description,
+					current.genre,
+					current.scoreText
+				)
+			);
 		}
 		console.log(this.resultList);
 	}
