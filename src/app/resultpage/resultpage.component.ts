@@ -76,7 +76,7 @@ export class ResultpageComponent implements OnInit {
 				urlStr = this.appUrl + this.search;
 				break;
 			case "Reviews":
-				urlStr = this.reviewUrl + this.search;
+				urlStr = this.reviewUrl + this.search+`&group=true&group.field=appId&group.limit=1`;
 				break;
 			case "All":
 				break;
@@ -102,18 +102,37 @@ export class ResultpageComponent implements OnInit {
 	}
 
 	responseStrip() {
-		this.jsonList = this.jsonList.response.docs;
+		switch(this.category){
+			case 'Apps':
+				this.jsonList = this.jsonList.response.docs;
+				break;
+			case 'Reviews':
+				if(this.jsonList.grouped.appId.groups) 
+					this.jsonList = this.jsonList.grouped.appId.groups;
+				console.log(this.jsonList);
+				break;
+			case 'All':
+				break;
+		}
 	}
 
 	amountofpages() {
-		this.pagenum = Math.floor(this.jsonList.response.numFound / 10);
+		if(this.category == 'Apps'){
+			this.pagenum = Math.floor(this.jsonList.response.numFound / 10);
+		
+
 		let remainder = <number>this.pagenum % 10;
 		if (remainder > 0) {
 			this.pagenum += 1;
 		}
 		console.log(this.pagenum);
-		this.pageRange = Array.from(Array(this.pagenum).keys()).map(i => i + 1);
-	}
+		this.pageRange = Array.from(Array(this.pagenum).keys()).map(i => i + 1);}
+		else if (this.category == "Reviews"){
+			this.pageRange = Array.from(Array(1).keys()).map(i => i + 1);
+			// let length = this.jsonList.grouped.appId.groups[0].length
+			// this.pagenum = Math.floor(length / 10);
+		}
+}
 
 	changePage(page) {
 		this.redirectTo(["/resultpage"], {
@@ -136,20 +155,43 @@ export class ResultpageComponent implements OnInit {
 	 */
 	update() {
 		console.log("JSON" + <JSON>this.jsonList);
-		let length = Object.keys(this.jsonList);
 		this.resultList = [];
-		for (let entry of length) {
-			let current = this.jsonList[entry];
+		if (this.category == 'Apps'){
+			let length = Object.keys(this.jsonList);
+			
+			for (let entry of length) {
+				let current = this.jsonList[entry];
+				this.resultList.push(
+				new appresult(
+						current.id,
+						current.icon[0],
+						current.title,
+						current.description,
+						current.genre,
+						current.scoreText,
+						current.appId
+					)
+				);
+			}
+		}
+		else if (this.category == "Reviews"){
+			let length = this.jsonList.length;
+			for (let i=0; i<length; i++) {
+				let current = this.jsonList[i].doclist.docs[0];
 			this.resultList.push(
 				new appresult(
-					current.icon[0],
-					current.title,
-					current.description,
-					current.genre,
-					current.scoreText
-				)
-			);
+					'',
+					current.appImage,
+					current.appName,
+					'',
+					'',
+					'',
+					current.appId
+					)
+				);
+			}
 		}
+				
 		console.log(this.resultList);
 	}
 

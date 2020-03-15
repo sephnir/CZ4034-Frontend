@@ -22,3 +22,36 @@ Review
 TODO - by sunday:
 Finish page number
 Finish The description and review component 
+
+
+Review
+        "appName"
+        "appId":["com.amazon.avod.thirdpartyclient"],
+        "appImage":"https://lh3.googleusercontent.com/VojafVZNddI6JvdDGWFrRmxc-prrcInL2AuBymsqGoeXjT4f9sv7KnetB-v3iLxk_Koi",
+
+result page
+-app: appID,appImage
+
+reviews
+-group by:
+-appID, icon
+
+
+
+APP
+        "title"
+        "appId":"com.chewy.android",
+        "icon":["https://lh3.googleusercontent.com/qFEQ33ocRE7XuP1hIkzHvBdZSiCzf-pmMLgdXmjG_0Qr-MEpJFAsmfW6nRKcDUTDDCE"],
+
+APP -> RESULT PAGE -> DESCRIPTION / REVIEW (ALL THE REVIEWS BASED ON THE API CALL) 
+
+REVIEWS -> RESULT PAGE -> REVIEW(BASED ON THE QUERY)/DESCRIPTION
+http://18.141.144.113:8983/solr/appreviews/query?q=appId%3Acom.alibaba.intl.android.apps.poseidon
+
+
+FROM REVIEWS -> DESCRIPTION -> SAVE THE REVIEWS
+FIX PAGING
+
+SORTING
+
+CSS

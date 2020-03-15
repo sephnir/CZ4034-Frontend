@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { appresult } from "../resultpage/result.app.model";
+import { APIservice } from "../api.service";
+
 
 @Component({
 	selector: "app-individualresult",
@@ -8,8 +10,19 @@ import { appresult } from "../resultpage/result.app.model";
 })
 export class IndividualresultComponent implements OnInit {
 	@Input() resultinstance: appresult;
+	@Input() state: string;
 
-	constructor() {}
+	currentTab: string;
 
-	ngOnInit() {}
+	constructor() {
+	}
+
+	ngOnInit() {
+		//app -> description
+		//review -> review
+		this.currentTab = this.state;
+	}
+	changeTab(value){
+		this.currentTab = value;
+	}
 }

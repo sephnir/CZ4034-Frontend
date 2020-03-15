@@ -3,8 +3,29 @@
 		<img class="thumbnail" [src]="resultinstance.icon" />
 
 		<div class="header">
-			<h5>{{ resultinstance.name }}</h5>
-			<h5>{{ resultinstance.score }}</h5>
+			<div class="container">
+				<h2>Toggleable Pills</h2>
+				<br>
+				<!-- Nav pills -->
+				<ul class="nav nav-pills" role="tablist">
+				  <li class="nav-item">
+					<a class="nav-link " data-toggle="pill" (click)="changeTab('Apps')" >Description</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link" data-toggle="pill" (click)="changeTab('Reviews')" > Reviews</a>
+				  </li>
+				</ul>
+			</div>
+
+			<div *ngIf="this.currentTab == 'Reviews' ; else notReview" >
+				<app-appreview [appId]="this.resultinstance.appId"></app-appreview>
+			</div>
+			<ng-template #notReview>
+				<app-description [id]="this.resultinstance.id" ></app-description>
+			</ng-template>
+
+
+			
 		</div>
 	</div>
 </div>

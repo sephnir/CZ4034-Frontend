@@ -3,6 +3,8 @@ import { NgModule }              from '@angular/core';
 
 
 import { MainpageComponent } from './mainpage/mainpage.component';
+import { DescriptionComponent } from './description/description.component';
+import { AppreviewComponent } from './appreview/appreview.component';
 import { ResultpageComponent } from './resultpage/resultpage.component';
 import {RootpageComponent} from './rootpage/rootpage.component';
 import {IndividualresultComponent} from './individualresult/individualresult.component';
@@ -29,4 +31,4 @@ const appRoutes: Routes = [
   })
 
   export class AppRoutingModule {}
-  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent,IndividualresultComponent,SearchbarComponent]
+  export const routingcomponents = [RootpageComponent,MainpageComponent,ResultpageComponent,IndividualresultComponent,SearchbarComponent,DescriptionComponent,AppreviewComponent]
