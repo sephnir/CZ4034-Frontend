@@ -76,7 +76,7 @@ export class ResultpageComponent implements OnInit {
 				urlStr = this.appUrl + this.search;
 				break;
 			case "Reviews":
-				urlStr = this.reviewUrl + this.search+`&group=true&group.field=appId&group.limit=1`;
+				urlStr = this.reviewUrl + this.search+`&group=true&group.field=appId&group.limit=1&group.ngroups=true`;
 				break;
 			case "All":
 				break;
@@ -117,22 +117,29 @@ export class ResultpageComponent implements OnInit {
 	}
 
 	amountofpages() {
-		if(this.category == 'Apps'){
+		let remainder = 0;
+		if(this.category == 'Apps')
+		{
 			this.pagenum = Math.floor(this.jsonList.response.numFound / 10);
+			remainder = <number>this.jsonList.response.numFound % 10;
+		}
+		else if (this.category == "Reviews"){
+			this.pagenum  = Math.floor(this.jsonList.grouped.appId.ngroups /10);
+			remainder = <number>this.jsonList.grouped.appId.ngroups % 10;
+
+		}
 		
 
-		let remainder = <number>this.pagenum % 10;
 		if (remainder > 0) {
 			this.pagenum += 1;
 		}
 		console.log(this.pagenum);
 		this.pageRange = Array.from(Array(this.pagenum).keys()).map(i => i + 1);}
-		else if (this.category == "Reviews"){
-			this.pageRange = Array.from(Array(1).keys()).map(i => i + 1);
 			// let length = this.jsonList.grouped.appId.groups[0].length
 			// this.pagenum = Math.floor(length / 10);
-		}
-}
+		
+
+
 
 	changePage(page) {
 		this.redirectTo(["/resultpage"], {

@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import {AppRoutingModule,routingcomponents} from './app.router.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SpellCheckerModule } from 'ngx-spellchecker';
+import { SpellCheckerService } from 'ngx-spellchecker'; 
+
 
 
 @NgModule({
@@ -16,10 +19,11 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SpellCheckerModule,
 
   ],
-  providers: [],
+  providers: [SpellCheckerService],
   bootstrap: [routingcomponents[0]]
 })
 export class AppModule { }
