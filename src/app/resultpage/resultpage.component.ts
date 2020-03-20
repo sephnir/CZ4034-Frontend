@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { appresult } from "./result.app.model";
 import { Router, NavigationExtras } from "@angular/router";
-import { APIservice } from "../api.service";
+import { APIservice,searchbarhistory } from "../api.service";
 
 @Component({
 	selector: "app-resultpage",
@@ -24,15 +24,12 @@ export class ResultpageComponent implements OnInit {
 	pagenum: number;
 	pageRange: number[];
 
-	constructor(private router: Router, private _api: APIservice) {
-		this.search = <string>history.state.data;
-		this.category = <string>history.state.category;
+	constructor(private router: Router, private _api: APIservice,private _search : searchbarhistory) {
 		this.currentpage = <number>history.state.currentpage;
 		this.sortingmethods = ["Relevance", "Alphabetical", "Score"];
 		this.sortingselected = this.sortingmethods[0];
 		this.suggestionExist = false;
 		this.pagenum;
-		this.fetch();
 	}
 
 	sortArray() {
@@ -144,8 +141,6 @@ export class ResultpageComponent implements OnInit {
 	changePage(page) {
 		this.redirectTo(["/resultpage"], {
 			state: {
-				data: this.search,
-				category: this.category,
 				currentpage: page
 			}
 		});
@@ -202,5 +197,9 @@ export class ResultpageComponent implements OnInit {
 		console.log(this.resultList);
 	}
 
-	ngOnInit() {}
+	ngOnInit() {
+		this.search=this._search.getquery();
+		this.category = this._search.getstate();
+		this.fetch();
+	}
 }

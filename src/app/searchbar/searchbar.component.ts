@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationExtras } from "@angular/router";
-import { APIservice,APIspellcheck } from "../api.service";
+import { APIservice,APIspellcheck,searchbarhistory } from "../api.service";
 
 
 
@@ -19,10 +19,10 @@ export class SearchbarComponent implements OnInit {
 	dict: any
 	remainingstring: string;
 
-	constructor(private router: Router,private _api: APIservice,private _spellcheck: APIspellcheck) {
+	constructor(private router: Router,private _api: APIservice,private _spellcheck: APIspellcheck,private _search: searchbarhistory) {
 		this.suggestionlist = [];
 		this.dropDown = ["All","Apps","Reviews"];
-		this.catstring = this.dropDown[0];
+		this.catstring;
 		this.jsonList = {};
 	}
 
@@ -108,11 +108,9 @@ export class SearchbarComponent implements OnInit {
 				searchbar.className = searchbar.className + " is-invalid";
 			return;
 		}
-		console.log(this.trim(this.searchVal));
+		this._search.setquery(this.catstring,this.trim(this.searchVal));
 		this.redirectTo(["/resultpage"], {
 			state: { 
-				data: this.trim(this.searchVal) ,
-				category: this.catstring,
 				currentpage: 1
 			}
 		});
@@ -129,11 +127,16 @@ export class SearchbarComponent implements OnInit {
 			.then(() => this.router.navigate(uri, data));
 	}
 
+	ngOnInit() {
+		if (this._search.getstate() == null){
+			this.catstring=this.dropDown[0];
+		}
+		else{
+			this.catstring = this._search.getstate();
+		}
+		if (this._search.getquery != null){
+			this.searchVal = this._search.getquery();
+		}
 
-	setcat(){
-		
 	}
-
-
-	ngOnInit() {}
 }

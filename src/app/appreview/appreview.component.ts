@@ -1,5 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { APIservice } from "../api.service";
+import { APIservice, searchbarhistory } from "../api.service";
 import {reviewinstance} from "./reviewinstance.app.model";
 
 
@@ -10,15 +10,18 @@ import {reviewinstance} from "./reviewinstance.app.model";
 })
 export class AppreviewComponent implements OnInit {
   @Input() appId: string;
-  @Input() state: string;
-  @Input() query: string;
+  state:string;
+  query:string;
+
   
   private readonly appUrl = "http://18.141.144.113:8983/solr/appreviews/query?";
   jsonList: any;
   
   reviewInst: reviewinstance[];
   
-  constructor( private _api: APIservice) { 
+  constructor( private _api: APIservice ,private _search :searchbarhistory) { 
+	  this.state = _search.getstate();
+	  this.query = _search.getquery();
   }
 
   ngOnInit() {

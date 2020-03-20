@@ -4,7 +4,7 @@
 
 		<div class="header">
 			<div class="container">
-				<h2>Toggleable Pills</h2>
+				<h2>{{this.resultinstance.title}}</h2>
 				<br>
 				<!-- Nav pills -->
 				<ul class="nav nav-pills" role="tablist">
@@ -18,10 +18,10 @@
 			</div>
 
 			<div *ngIf="this.currentTab == 'Reviews' ; else notReview" >
-				<app-appreview [appId]="this.resultinstance.appId"></app-appreview>
+				<app-appreview [appId]="this.resultinstance.appId" ></app-appreview>
 			</div>
 			<ng-template #notReview>
-				<app-description [id]="this.resultinstance.id" ></app-description>
+				<app-description [title]="this.resultinstance.title" ></app-description>
 			</ng-template>
 
 

@@ -1,6 +1,7 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Inject } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { SpellCheckerService } from 'ngx-spellchecker';
+import { Statement } from '@angular/compiler';
 
 
 const httpOptions = {
@@ -33,6 +34,24 @@ export class APIspellcheck {
 	getdict(){
 		return this.r();
 	}
+}
 
+@Injectable({providedIn: "root"})
+export class searchbarhistory{
+	state: string;
+	query: string;
+
+	constructor(){}
+
+	getstate(){
+		return this.state;
+	}
+	getquery(){
+		return this.query;
+	}
+	setquery(state,query){
+		this.state = state;
+		this.query = query;
+	}
 
 }

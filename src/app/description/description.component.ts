@@ -7,7 +7,7 @@ import { APIservice } from "../api.service";
   styleUrls: ['./description.component.scss']
 })
 export class DescriptionComponent implements OnInit { 
-  @Input() id: string;
+  @Input() title: string;
 
   private readonly appUrl = "http://18.141.144.113:8983/solr/apps/query?q=";
   jsonList: any;
@@ -26,8 +26,10 @@ export class DescriptionComponent implements OnInit {
 	 */
 
 	fetch() {
-		let urlStr = this.appUrl;
-    urlStr += `id%3A${this.id}`;
+    let urlStr = this.appUrl;
+    this.title.replace(/[!@#$%^&:///;',.//*]/g, "").normalize('NFC');
+
+    urlStr += `title%3A${this.title}`;
     
 		this._api.getApps(urlStr).subscribe(
 			data => {

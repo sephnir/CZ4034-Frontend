@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { appresult } from "../resultpage/result.app.model";
-import { APIservice } from "../api.service";
+import{searchbarhistory} from "../api.service";
 
 
 @Component({
@@ -10,11 +10,15 @@ import { APIservice } from "../api.service";
 })
 export class IndividualresultComponent implements OnInit {
 	@Input() resultinstance: appresult;
-	@Input() state: string;
 
 	currentTab: string;
+	query : string;
+	state : string;
 
-	constructor() {
+	constructor(private _search : searchbarhistory) {
+		this.state = this._search.getstate();
+		this.query = this._search.getstate();
+		
 	}
 
 	ngOnInit() {
