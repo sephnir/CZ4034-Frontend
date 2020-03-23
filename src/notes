@@ -55,3 +55,8 @@ FIX PAGING
 SORTING
 
 CSS
+
+
+http://18.141.144.113:8983/solr/apps/query?q=title%3ADiscord%20good
+
+http://18.141.144.113:8983/solr/appreviews/select?q=*%3A*

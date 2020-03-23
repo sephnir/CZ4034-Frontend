@@ -21,9 +21,11 @@
     "@angular/router": "~8.2.14",
     "@nlpjs/basic": "^4.1.4",
     "angular-particle-updated": "^1.0.4-1",
+    "common-substrings": "^2.0.4",
     "natural": "^0.6.3",
     "ngx-spellchecker": "^1.0.5",
     "rxjs": "~6.4.0",
+    "stopword": "^1.0.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },

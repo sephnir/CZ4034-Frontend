@@ -1,7 +1,7 @@
 <div>
 		<div>
-		<select class="btn btn-secondary dropdown-toggle" [(ngModel)]="catstring">
-			<option *ngFor="let category of dropDown"  [value]="category">{{category}}</option>
+		<select class="btn btn-secondary dropdown-toggle" [(ngModel)]="catstring" (change)="clear()">
+			<option *ngFor="let category of dropDown"  [value]="category" >{{category}} </option>
 		  </select>
 		</div>
 

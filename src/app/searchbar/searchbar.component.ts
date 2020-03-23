@@ -127,6 +127,10 @@ export class SearchbarComponent implements OnInit {
 			.then(() => this.router.navigate(uri, data));
 	}
 
+	clear(){
+		this.suggestionlist = [];
+	}
+
 	ngOnInit() {
 		if (this._search.getstate() == null){
 			this.catstring=this.dropDown[0];

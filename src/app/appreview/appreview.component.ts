@@ -70,12 +70,15 @@ export class AppreviewComponent implements OnInit {
 				new reviewinstance(
 					current.reviewUserName,
 					current.review,
-          current.reviewScore,
-          current.reviewThumbsUp,
+					current.reviewScore,
+					current.reviewThumbsUp,
 					current.appImage,
-					current.reviewDate
+					current.reviewDate,
+					current.Sentiment,
+					current.useful
 				)
 			);
 		}
-  }
+  	}
 }
+
