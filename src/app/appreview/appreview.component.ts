@@ -1,6 +1,10 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { APIservice, searchbarhistory } from "../api.service";
+import { APIservice, searchbarhistory,APIspellcheck } from "../api.service";
+import { Router,  } from "@angular/router";
 import {reviewinstance} from "./reviewinstance.app.model";
+import { SearchbarComponent } from '../searchbar/searchbar.component';
+import * as st from 'stopword';
+
 
 
 @Component({
@@ -19,7 +23,7 @@ export class AppreviewComponent implements OnInit {
   
   reviewInst: reviewinstance[];
   
-  constructor( private _api: APIservice ,private _search :searchbarhistory) { 
+  constructor(private router: Router,private _api: APIservice,private _spellcheck: APIspellcheck,private _search: searchbarhistory)  { 
 	  this.state = _search.getstate();
 	  this.query = _search.getquery();
   }
@@ -28,6 +32,40 @@ export class AppreviewComponent implements OnInit {
     this.fetch();
 
   }
+frequent_string(description){
+	description = description[0]
+	let searchterm = ''
+	let textStr = description.replace(/[^a-z0-9]+|\s+/gmi, " ");
+
+	textStr = textStr.normalize('NFC');
+	textStr = textStr.replace(/(\\n)+/g, " ");
+	let text = textStr.split(" ");
+
+	text = st.removeStopwords(text);
+	text = text.filter(item => item !== '');
+
+	if (text.length >  10){
+		const mostFrequent = data => data.reduce((r,c,i,a) => {
+			r[c] = (r[c] || 0) + 1
+			r.max = r[c] > r.max ? r[c] : r.max
+			if(i == a.length-1) {
+			r = Object.entries(r).filter(([k,v]) => v == r.max && k != 'max')
+			return r.map(x => x[0])
+			}
+			return r
+		}, {max: 0})
+		searchterm = mostFrequent(text).join(' ');
+	
+	}
+	else{
+		searchterm = text.join(' ');
+	}
+	
+	let sb = new SearchbarComponent(this.router, this._api, this._spellcheck, this._search);
+	sb.externalsearch('Reviews',searchterm);
+
+}
+  
 
   /**
 	 * Fetch data from backend

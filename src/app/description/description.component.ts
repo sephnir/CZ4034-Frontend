@@ -1,5 +1,7 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { APIservice } from "../api.service";
+import { SearchbarComponent } from '../searchbar/searchbar.component';
+import { Router,  } from "@angular/router";
+import { APIservice,APIspellcheck,searchbarhistory } from "../api.service";
 import * as st from 'stopword';
 
 
@@ -15,7 +17,8 @@ export class DescriptionComponent implements OnInit {
   jsonList: any;
   description: string;
   
-  constructor( private _api: APIservice) { 
+  constructor(private router: Router,private _api: APIservice,private _spellcheck: APIspellcheck,private _search: searchbarhistory) { 
+
   }
 
   ngOnInit() {
@@ -29,7 +32,9 @@ export class DescriptionComponent implements OnInit {
 
 
   frequent_string(){
-    let textStr = this.description.replace(/[^A-Za-z0-9\s]+/g, "")
+    let textStr = this.description.replace(/[^a-z0-9]+|\s+/gmi, " ");
+
+    textStr = textStr.normalize('NFC');
     textStr = textStr.replace(/(\\n)+/g, " ");
     let text = textStr.split(" ");
 
@@ -46,14 +51,17 @@ export class DescriptionComponent implements OnInit {
       }
       return r
     }, {max: 0})
-    
+    let this_text = mostFrequent(text).join(' ');
+    console.log('test')
     console.log(mostFrequent(text))
+    let sb = new SearchbarComponent(this.router, this._api, this._spellcheck, this._search);
+    sb.externalsearch('Apps',this_text);
 
   }
 
 	fetch() {
     let urlStr = this.appUrl;
-    this.title = this.title.replace(/([!@#$%^&:///;',.//*])/g, "").normalize('NFC');
+    this.title = this.title.replace(/([!@#$%^&:///;,.//*])/g, "").normalize('NFC');
 
     urlStr += `title%3A${this.title}`;
     

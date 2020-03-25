@@ -4,7 +4,6 @@ import { APIservice,APIspellcheck,searchbarhistory } from "../api.service";
 
 
 
-
 @Component({
 	selector: "app-searchbar",
 	templateUrl: "./searchbar.component.html",
@@ -35,7 +34,7 @@ export class SearchbarComponent implements OnInit {
 	}
 
 	trim(s:string){ 
-		let a = s.replace(/[!@#$%^&:///;',.//*]/g, "").normalize('NFC');
+		let a = s.replace(/[!@#$%^&:///;,.//*]/g, "").normalize('NFC');
 		return a.replace(/\s\s+/g, ' ');
 		
 	  }
@@ -96,6 +95,12 @@ export class SearchbarComponent implements OnInit {
 			
 		}
 		
+	}
+	externalsearch(cat: string,query:string){
+		this.catstring = cat;
+		this.searchVal = query;
+		this.search();
+
 	}
 
 	/**

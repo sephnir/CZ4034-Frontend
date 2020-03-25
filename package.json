@@ -24,6 +24,8 @@
     "common-substrings": "^2.0.4",
     "natural": "^0.6.3",
     "ngx-spellchecker": "^1.0.5",
+    "node-summary": "^1.2.0",
+    "nodejs-text-summarizer": "^2.0.3",
     "rxjs": "~6.4.0",
     "stopword": "^1.0.0",
     "tslib": "^1.10.0",
