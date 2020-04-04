@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { appresult } from "./result.app.model";
 import { Router, NavigationExtras } from "@angular/router";
-import { APIservice,searchbarhistory } from "../api.service";
+import { APIservice, searchbarhistory } from "../api.service";
 
 @Component({
 	selector: "app-resultpage",
 	templateUrl: "./resultpage.component.html",
-	styleUrls: ["./resultpage.component.scss"]
+	styleUrls: ["./resultpage.component.scss"],
 })
 export class ResultpageComponent implements OnInit {
 	private readonly reviewUrl =
@@ -24,7 +24,11 @@ export class ResultpageComponent implements OnInit {
 	pagenum: number;
 	pageRange: number[];
 
-	constructor(private router: Router, private _api: APIservice,private _search : searchbarhistory) {
+	constructor(
+		private router: Router,
+		private _api: APIservice,
+		private _search: searchbarhistory
+	) {
 		this.currentpage = <number>history.state.currentpage;
 		this.sortingmethods = ["Relevance", "Alphabetical", "Score"];
 		this.sortingselected = this.sortingmethods[0];
@@ -73,7 +77,10 @@ export class ResultpageComponent implements OnInit {
 				urlStr = this.appUrl + this.search;
 				break;
 			case "Reviews":
-				urlStr = this.reviewUrl + this.search+`&group=true&group.field=appId&group.limit=1&group.ngroups=true`;
+				urlStr =
+					this.reviewUrl +
+					this.search +
+					`&group=true&group.field=appId&group.limit=1&group.ngroups=true`;
 				break;
 			case "All":
 				break;
@@ -83,12 +90,12 @@ export class ResultpageComponent implements OnInit {
 		urlStr += `&rows=${nextrow}&start=${previousrow}`;
 		console.log(urlStr);
 		this._api.getApps(urlStr).subscribe(
-			data => {
+			(data) => {
 				this.jsonList = data;
 				this.amountofpages();
 				this.responseStrip();
 			},
-			err => console.error(err),
+			(err) => console.error(err),
 			() => {
 				console.log(urlStr);
 				this.update();
@@ -99,50 +106,46 @@ export class ResultpageComponent implements OnInit {
 	}
 
 	responseStrip() {
-		switch(this.category){
-			case 'Apps':
+		switch (this.category) {
+			case "Apps":
 				this.jsonList = this.jsonList.response.docs;
 				break;
-			case 'Reviews':
-				if(this.jsonList.grouped.appId.groups) 
+			case "Reviews":
+				if (this.jsonList.grouped.appId.groups)
 					this.jsonList = this.jsonList.grouped.appId.groups;
 				console.log(this.jsonList);
 				break;
-			case 'All':
+			case "All":
 				break;
 		}
 	}
 
 	amountofpages() {
 		let remainder = 0;
-		if(this.category == 'Apps')
-		{
+		if (this.category == "Apps") {
 			this.pagenum = Math.floor(this.jsonList.response.numFound / 10);
 			remainder = <number>this.jsonList.response.numFound % 10;
-		}
-		else if (this.category == "Reviews"){
-			this.pagenum  = Math.floor(this.jsonList.grouped.appId.ngroups /10);
+		} else if (this.category == "Reviews") {
+			this.pagenum = Math.floor(this.jsonList.grouped.appId.ngroups / 10);
 			remainder = <number>this.jsonList.grouped.appId.ngroups % 10;
-
 		}
-		
 
 		if (remainder > 0) {
 			this.pagenum += 1;
 		}
 		console.log(this.pagenum);
-		this.pageRange = Array.from(Array(this.pagenum).keys()).map(i => i + 1);}
-			// let length = this.jsonList.grouped.appId.groups[0].length
-			// this.pagenum = Math.floor(length / 10);
-		
-
-
+		this.pageRange = Array.from(Array(this.pagenum).keys()).map(
+			(i) => i + 1
+		);
+	}
+	// let length = this.jsonList.grouped.appId.groups[0].length
+	// this.pagenum = Math.floor(length / 10);
 
 	changePage(page) {
 		this.redirectTo(["/resultpage"], {
 			state: {
-				currentpage: page
-			}
+				currentpage: page,
+			},
 		});
 	}
 
@@ -158,13 +161,14 @@ export class ResultpageComponent implements OnInit {
 	update() {
 		console.log("JSON" + <JSON>this.jsonList);
 		this.resultList = [];
-		if (this.category == 'Apps'){
+		if (this.category == "Apps") {
 			let length = Object.keys(this.jsonList);
-			
+
 			for (let entry of length) {
 				let current = this.jsonList[entry];
+
 				this.resultList.push(
-				new appresult(
+					new appresult(
 						current.id,
 						current.icon[0],
 						current.title,
@@ -175,30 +179,29 @@ export class ResultpageComponent implements OnInit {
 					)
 				);
 			}
-		}
-		else if (this.category == "Reviews"){
+		} else if (this.category == "Reviews") {
 			let length = this.jsonList.length;
-			for (let i=0; i<length; i++) {
+			for (let i = 0; i < length; i++) {
 				let current = this.jsonList[i].doclist.docs[0];
-			this.resultList.push(
-				new appresult(
-					'',
-					current.appImage,
-					current.appName,
-					'',
-					'',
-					'',
-					current.appId
+				this.resultList.push(
+					new appresult(
+						"",
+						current.appImage,
+						current.appName,
+						"",
+						"",
+						"",
+						current.appId
 					)
 				);
 			}
 		}
-				
+
 		console.log(this.resultList);
 	}
 
 	ngOnInit() {
-		this.search=this._search.getquery();
+		this.search = this._search.getquery();
 		this.category = this._search.getstate();
 		this.fetch();
 	}

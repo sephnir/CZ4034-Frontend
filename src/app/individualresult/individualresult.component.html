@@ -1,35 +1,53 @@
 <div class="main">
-	<div >
-		
-		<div class="header d-inline-flex">
-			<div> 
-				<img class="thumbnail" [src]="resultinstance.icon" />
-				<h2>{{this.resultinstance.title}}</h2>
+	<div class="d-flex">
+		<div class="leftdiv">
+			<img
+				class="thumbnail"
+				width="150"
+				height="150"
+				[src]="resultinstance.icon"
+			/>
+			<div>
+				<button
+					[class]="
+						currentTab == 'Apps'
+							? 'navbtn btn btn-primary'
+							: 'navbtn btn btn-secondary'
+					"
+					(click)="changeTab('Apps')"
+				>
+					Description
+				</button>
+				<button
+					class="navbtn btn btn-primary"
+					[class]="
+						currentTab == 'Reviews'
+							? 'navbtn btn btn-primary'
+							: 'navbtn btn btn-secondary'
+					"
+					(click)="changeTab('Reviews')"
+				>
+					Reviews
+				</button>
 			</div>
+		</div>
 
-			<div class="container">
-				
-				<br>
-				<!-- Nav pills -->
-				<ul class="nav nav-pills" role="tablist">
-				  <li class="nav-item">
-					<a class="nav-link " data-toggle="pill" (click)="changeTab('Apps')" >Description</a>
-				  </li>
-				  <li class="nav-item">
-					<a class="nav-link" data-toggle="pill" (click)="changeTab('Reviews')" > Reviews</a>
-				  </li>
-				</ul>
+		<div class="rightdiv">
+			<div class="title">
+				<h2>{{ this.resultinstance.title }}</h2>
 			</div>
-
-			<div *ngIf="this.currentTab == 'Reviews' ; else notReview" >
-				<app-appreview [appId]="this.resultinstance.appId" ></app-appreview>
+			<div class="scrollable card">
+				<div *ngIf="this.currentTab == 'Reviews'; else notReview">
+					<app-appreview
+						[appId]="this.resultinstance.appId"
+					></app-appreview>
+				</div>
+				<ng-template #notReview>
+					<app-description
+						[title]="this.resultinstance.title"
+					></app-description>
+				</ng-template>
 			</div>
-			<ng-template #notReview>
-				<app-description [title]="this.resultinstance.title" ></app-description>
-			</ng-template>
-
-
-			
 		</div>
 	</div>
 </div>
