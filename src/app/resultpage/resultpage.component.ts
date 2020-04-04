@@ -75,6 +75,8 @@ export class ResultpageComponent implements OnInit {
 		switch (this.category) {
 			case "Apps":
 				urlStr = this.appUrl + this.search;
+				console.log("SEARCHED")
+				console.log(urlStr)
 				break;
 			case "Reviews":
 				urlStr =
@@ -82,12 +84,11 @@ export class ResultpageComponent implements OnInit {
 					this.search +
 					`&group=true&group.field=appId&group.limit=1&group.ngroups=true`;
 				break;
-			case "All":
-				break;
+
 		}
 		let nextrow = this.currentpage * 10;
 		let previousrow = nextrow - 10;
-		urlStr += `&rows=${nextrow}&start=${previousrow}`;
+		urlStr += `&rows=10&start=${previousrow}`;
 		console.log(urlStr);
 		this._api.getApps(urlStr).subscribe(
 			(data) => {
@@ -114,8 +115,6 @@ export class ResultpageComponent implements OnInit {
 				if (this.jsonList.grouped.appId.groups)
 					this.jsonList = this.jsonList.grouped.appId.groups;
 				console.log(this.jsonList);
-				break;
-			case "All":
 				break;
 		}
 	}

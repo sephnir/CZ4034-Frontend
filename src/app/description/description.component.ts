@@ -41,6 +41,20 @@ export class DescriptionComponent implements OnInit {
 		text = st.removeStopwords(text);
 		text = text.filter((item) => item !== "");
 
+		let text1 = text.join(" ")
+
+		/*
+		var wordCounts = { };
+		var words = text1.split(/\b/);
+
+		for(var i = 0; i < words.length; i++)
+			wordCounts[ words[i]] = (wordCounts[ words[i].toLowerCase()] || 0) + 1;
+		
+		console.log(wordCounts)*/
+		
+
+
+
 		const mostFrequent = (data) =>
 			data.reduce(
 				(r, c, i, a) => {
@@ -54,10 +68,17 @@ export class DescriptionComponent implements OnInit {
 					}
 					return r;
 				},
-				{ max: 0 }
+				{ max: 2 }
 			);
-		let this_text = mostFrequent(text).join(" ");
-		console.log("test");
+		let this_text_arr = mostFrequent(text);
+		let temp = [];
+		this_text_arr.forEach(element => {
+			if ((element.length) >= 2){
+				temp.push(element)
+			}
+		});
+
+		let this_text = temp.join(" ");
 		console.log(mostFrequent(text));
 		let sb = new SearchbarComponent(
 			this.router,
@@ -65,13 +86,14 @@ export class DescriptionComponent implements OnInit {
 			this._spellcheck,
 			this._search
 		);
+		this_text = this._search.query +" 2B"+ this_text
 		sb.externalsearch("Apps", this_text);
 	}
 
 	fetch() {
 		let urlStr = this.appUrl;
 		this.title = this.title
-			.replace(/([!@#$%^&:///;,.//*])/g, "")
+			.replace(/([!@#:;,/])/g, " ")
 			.normalize("NFC");
 
 		urlStr += `title%3A${this.title}`;

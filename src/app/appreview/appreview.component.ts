@@ -16,7 +16,8 @@ export class AppreviewComponent implements OnInit {
   @Input() appId: string;
   state:string;
   query:string;
-
+  sortingselected = ["Sentiment","Usefulness","Review Score"];
+  currentselected = this.sortingselected[0];
   
   private readonly appUrl = "http://18.141.144.113:8983/solr/appreviews/query?";
   jsonList: any;
@@ -29,9 +30,8 @@ export class AppreviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetch();
+	this.fetch();}
 
-  }
 frequent_string(description){
 	description = description[0]
 	let searchterm = ''
@@ -65,8 +65,6 @@ frequent_string(description){
 	sb.externalsearch('Reviews',searchterm);
 
 }
-  
-
   /**
 	 * Fetch data from backend
 	 */
@@ -89,7 +87,7 @@ frequent_string(description){
         console.log(urlStr);
         this.responseStrip();
 				this.update();
-				//this.correctlyspelled()
+				this.sortArray();
 			}
 		);
   }
@@ -97,6 +95,40 @@ frequent_string(description){
 	responseStrip() {
 		this.jsonList = this.jsonList.response.docs;
 	}
+
+
+
+
+
+	
+ sortArray(){
+	switch(this.currentselected){
+
+	 case 'Sentiment':
+		 console.log('sent');
+		 this.reviewInst.sort((a,b)=>{
+			if(a.sentiment > b.sentiment) return -1;
+			if(a.sentiment < b.sentiment) return  1;	
+			return 0;
+		 });
+		 break;
+	 case 'Usefulness':
+		this.reviewInst.sort((a,b)=>{
+			if(a.useful > b.useful) return -1;
+			if(a.useful < b.useful) return  1;	
+			return 0;
+			 });
+			break;
+	case 'Review Score':
+		this.reviewInst.sort((a,b)=>{
+			if(parseInt(a.score) > parseInt(b.score)) return -1;
+			if(parseInt(a.score) < parseInt(b.score)) return  1;	
+			return 0;
+			 });
+			break;
+
+	}
+}
 
   update(){
 		console.log("JSON" + <JSON>this.jsonList);

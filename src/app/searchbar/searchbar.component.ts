@@ -23,7 +23,7 @@ export class SearchbarComponent implements OnInit {
 		private _search: searchbarhistory
 	) {
 		this.suggestionlist = [];
-		this.dropDown = ["All", "Apps", "Reviews"];
+		this.dropDown = ["Apps", "Reviews"];
 		this.catstring;
 		this.jsonList = {};
 	}
@@ -40,7 +40,8 @@ export class SearchbarComponent implements OnInit {
 
 	trim(s: string) {
 		//let a = s.replace(/[!@#$%^&:///;,.//*]/g, " ").normalize("NFC");
-		let a = s.normalize("NFC");
+		//let a = s.normalize("NFC");
+		let a = s.replace(/([!@#:;,/])/g, " ").normalize("NFC");
 		return a.replace(/\s\s+/g, " ");
 	}
 

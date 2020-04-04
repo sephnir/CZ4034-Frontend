@@ -1,28 +1,48 @@
 
-<div class="card" *ngFor="let review of reviewInst">
-
-    <div [ngClass]="{'red-background': review.useful==0, 'green-background': review.useful==1}"   > 
-        {{review.username}}<br />
-        {{review.review}}<br />
-        usefulness: {{review.useful}}<br />
-        sentiment: {{review.sentiment}}<br />
- 
-        <div *ngIf="review.sentiment < 0 " >
-            😠
+<div>
+    <div>   
+        <div>
+            <select
+                class="btn btn-secondary dropdown-toggle"
+                (change)="sortArray()"
+                [(ngModel)]="currentselected"
+            >
+                <option
+                    *ngFor="let sortitem of sortingselected"
+                    [value]="sortitem"
+                    >{{ sortitem }}</option
+                >
+            </select>
         </div>
-        <div *ngIf="review.sentiment > 0 " >
-            😀
-        </div>
-        <div *ngIf="review.sentiment == 0 " >
-            😐
-        </div>
-
-        <button type="submit" class="btn btn-primary" (click)="frequent_string(review.review)">
-            <span class="fa fa-plus"></span>
-        </button>
-
     </div>
 
+    <div class="card" *ngFor="let review of reviewInst">
+
+        <div [ngClass]="{'red-background': review.useful==0, 'green-background': review.useful==1}"   > 
+            {{review.username}}<br />
+            {{review.review}}<br />
+            Review Score: {{review.score}}<br />
+            usefulness: {{review.useful}}<br />
+            sentiment: {{review.sentiment}}<br />
+     
+            <div *ngIf="review.sentiment < 0 " >
+                😠
+            </div>
+            <div *ngIf="review.sentiment > 0 " >
+                😀
+            </div>
+            <div *ngIf="review.sentiment == 0 " >
+                😐
+            </div>
+    
+            <button type="submit" class="btn btn-primary" (click)="frequent_string(review.review)">
+                <span class="fa fa-plus"></span>
+            </button>
+    
+        </div>
+    
+    </div>
 </div>
+
 
 
