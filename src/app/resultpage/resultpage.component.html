@@ -1,21 +1,36 @@
 <div class="main">
-	<div class="search">
-		<app-searchbar></app-searchbar>
+	<div class="head d-flex">
+		<a href="/">
+			<img src="assets/img/logo.png" alt="cz4034" class="logo" />
+		</a>
+
+		<div class="search">
+			<app-searchbar></app-searchbar>
+		</div>
 	</div>
 
 	<hr />
 
 	<div>
-	<p>
-		Displaying results for <b>{{ search }}</b>
-	</p>
-	<p *ngIf="suggestionExist" >
-		Do you mean <a>{{suggestion}}</a>?
-	</p>
-	<div>
-		<select class="btn btn-secondary dropdown-toggle" (change) = "sortArray()" [(ngModel)]="sortingselected">
-			<option *ngFor="let sortitem of sortingmethods"  [value]="sortitem">{{sortitem}}</option>
-		  </select>
+		<p>
+			Displaying results for <b>{{ search }}</b>
+		</p>
+		<p *ngIf="suggestionExist">
+			Do you mean <a>{{ suggestion }}</a
+			>?
+		</p>
+		<div>
+			<select
+				class="btn btn-secondary dropdown-toggle"
+				(change)="sortArray()"
+				[(ngModel)]="sortingselected"
+			>
+				<option
+					*ngFor="let sortitem of sortingmethods"
+					[value]="sortitem"
+					>{{ sortitem }}</option
+				>
+			</select>
 		</div>
 	</div>
 
@@ -24,8 +39,7 @@
 		[resultinstance]="item"
 	>
 	</app-individualresult>
-	
-	<hr />
-	<a *ngFor="let item of pageRange" (click)="changePage(item)" >{{item}}</a>
-</div>
 
+	<hr />
+	<a *ngFor="let item of pageRange" (click)="changePage(item)">{{ item }}</a>
+</div>
