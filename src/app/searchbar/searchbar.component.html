@@ -13,11 +13,12 @@
 		<input
 			[(ngModel)]="searchVal"
 			name="searchVal"
+			id="searchbar"
 			type="text"
 			class="form-control searchbar element"
 			placeholder="Search terms"
 			autocomplete="off"
-			(keyup)="update($event)"
+			(keyup)="update($event) || ($event.keyCode === 13 && search())"
 		/>
 
 		<button (click)="search()" class="btn btn-primary element searchbtn">

@@ -30,15 +30,16 @@
 	border: gray solid 1px;
 	top: 55px;
 	left: 120px;
-}
+	z-index: 100;
 
-.suggestionitem {
-	background-color: white;
-	padding: 5px;
-	margin: 0;
-}
+	.suggestionitem {
+		background-color: white;
+		padding: 5px;
+		margin: 0;
+	}
 
-.suggestionitem:hover {
-	color: white;
-	background-color: gray;
+	.suggestionitem:hover {
+		color: white;
+		background-color: gray;
+	}
 }

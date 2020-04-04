@@ -22,3 +22,16 @@
 .logo {
 	height: 60px;
 }
+
+.footer {
+	width: 100%;
+	text-align: center;
+
+	.pages {
+		display: inline-block;
+
+		.pagebtn {
+			margin-right: 2px;
+		}
+	}
+}

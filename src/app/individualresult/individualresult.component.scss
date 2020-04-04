@@ -12,34 +12,34 @@
 }
 
 .leftdiv {
-	margin: 10px 10px 10px 10px;
+	margin: 10px 10px 10px 50px;
 	padding: 0px;
 	width: 150px;
-}
 
-.thumbnail {
-	width: 150px;
-	height: 150px;
-	border-radius: 10px;
-}
+	.thumbnail {
+		width: 150px;
+		height: 150px;
+		border-radius: 10px;
+	}
 
-.title {
-	margin-bottom: 10px;
-}
-
-.navbtn {
-	width: 150px;
-	margin-top: 10px;
-}
-
-.scrollable {
-	overflow: auto;
-	max-height: 500px;
-	padding: 10px;
+	.navbtn {
+		width: 150px;
+		margin-top: 10px;
+	}
 }
 
 .rightdiv {
 	margin: 10px 50px 0 50px;
 	padding: 10px;
 	width: 100%;
+
+	.title {
+		margin-bottom: 10px;
+	}
+
+	.scrollable {
+		overflow: auto;
+		max-height: 500px;
+		padding: 10px;
+	}
 }
