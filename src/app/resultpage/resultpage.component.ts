@@ -45,22 +45,6 @@ export class ResultpageComponent implements OnInit {
 		}
 	}
 
-	/*
-	sortScore(){
-		this.resultList.sort(function(a:appresult, b:appresult){
-			if(a.score > b.score) return 1;
-			if(a.score < b.score) return -1;
-			return 0;
-		});
-	}*/
-
-	// sortAlphabet(){
-	// 	this.resultList.sort(function(a:appresult, b:appresult){
-	// 		if(a.name > b.name) return 1;
-	// 		if(a.name < b.name) return -1;
-	// 		return 0;
-	// 	});
-	// }
 
 	correctlyspelled() {
 		this.suggestionExist = !this.jsonList.spellcheck.correctlySpelled;
@@ -84,8 +68,9 @@ export class ResultpageComponent implements OnInit {
 					this.search +
 					`&group=true&group.field=appId&group.limit=1&group.ngroups=true`;
 				break;
-
 		}
+
+		
 		let nextrow = this.currentpage * 10;
 		let previousrow = nextrow - 10;
 		urlStr += `&rows=10&start=${previousrow}`;
@@ -100,10 +85,8 @@ export class ResultpageComponent implements OnInit {
 			() => {
 				console.log(urlStr);
 				this.update();
-				//this.correctlyspelled()
 			}
 		);
-		//
 	}
 
 	responseStrip() {
@@ -137,9 +120,6 @@ export class ResultpageComponent implements OnInit {
 			(i) => i + 1
 		);
 	}
-	// let length = this.jsonList.grouped.appId.groups[0].length
-	// this.pagenum = Math.floor(length / 10);
-
 	changePage(page) {
 		this.redirectTo(["/resultpage"], {
 			state: {

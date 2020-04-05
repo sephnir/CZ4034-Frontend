@@ -33,6 +33,43 @@ export class AppreviewComponent implements OnInit {
 	this.fetch();}
 
 frequent_string(description){
+	
+
+	let textStr = description[0].replace(/[^a-z0-9]+|\s+/gim, " ");
+	textStr = textStr.normalize("NFC").toLowerCase();
+
+	let text = textStr.split(" ")
+
+	text = st.removeStopwords(text);
+	text = text.filter((item) => item !== "");
+
+	let text1 = text.join(" ")
+	let additionaltext =""
+
+	if (text1.length > 10){
+		var wordCounts = { };
+		var words = text1.split(/\b/);
+
+		for(var i = 0; i < words.length; i++){
+				if (words[i].length > 2){
+				wordCounts[ words[i]] = (wordCounts[ words[i].toLowerCase()] || 0) + 1;}
+			
+		}
+		
+		delete (wordCounts[" "])
+		for (let i = 0; i<3; i++){
+			var max = Math.max.apply(null,Object.keys(wordCounts).map(function(x){ return wordCounts[x] }));
+			const key = Object.keys(wordCounts).find(key => wordCounts[key] === max);
+			additionaltext += " " + key
+			delete(wordCounts[key])
+		}
+		console.log(additionaltext)
+	}
+	else{
+		additionaltext = text1;
+	}
+
+	/*
 	description = description[0]
 	let searchterm = ''
 	let textStr = description.replace(/[^a-z0-9]+|\s+/gmi, " ");
@@ -59,10 +96,10 @@ frequent_string(description){
 	}
 	else{
 		searchterm = text.join(' ');
-	}
+	}*/
 	
 	let sb = new SearchbarComponent(this.router, this._api, this._spellcheck, this._search);
-	sb.externalsearch('Reviews',searchterm);
+	sb.externalsearch('Reviews',additionaltext);
 
 }
   /**
@@ -73,6 +110,8 @@ frequent_string(description){
     let urlStr = this.appUrl;
     if (this.state != "Reviews"){
 		  urlStr += `fq=appId%3A${this.appId}&q=*&rows=60`;
+		  console.log('Review query')
+		  console.log(urlStr)
     }
     else{ 
       urlStr += `fq=appId%3A${this.appId}&q=${this.query}&rows=60`;

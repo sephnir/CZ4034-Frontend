@@ -42,6 +42,7 @@ export class SearchbarComponent implements OnInit {
 		//let a = s.replace(/[!@#$%^&:///;,.//*]/g, " ").normalize("NFC");
 		//let a = s.normalize("NFC");
 		let a = s.replace(/([!@#:;,/])/g, " ").normalize("NFC");
+		a = a.replace(' +'," 2B")
 		return a.replace(/\s\s+/g, " ");
 	}
 
@@ -74,7 +75,7 @@ export class SearchbarComponent implements OnInit {
 				let bagofwords = value.split(" ");
 				this.remainingstring = bagofwords.slice(0, -1).join(" ");
 				let b = bagofwords.pop();
-				let r = this.dict.checkAndSuggest(b, [5], [2]);
+				let r = this.dict.checkAndSuggest(b, [10], [5]);
 				if (r.misspelled == true) {
 					this.suggestionlist = r.suggestions;
 				} else {

@@ -16,6 +16,7 @@ export class DescriptionComponent implements OnInit {
 	jsonList: any;
 	description: string;
 	descriptionRaw: string;
+	score: string;
 
 	constructor(
 		private router: Router,
@@ -34,27 +35,34 @@ export class DescriptionComponent implements OnInit {
 
 	frequent_string() {
 		let textStr = this.descriptionRaw.replace(/[^a-z0-9]+|\s+/gim, " ");
-		textStr = textStr.normalize("NFC");
+		textStr = textStr.normalize("NFC").toLowerCase();
 
-		let text = textStr.split(" ");
+		let text = textStr.split(" ")
 
 		text = st.removeStopwords(text);
 		text = text.filter((item) => item !== "");
 
 		let text1 = text.join(" ")
 
-		/*
 		var wordCounts = { };
 		var words = text1.split(/\b/);
 
-		for(var i = 0; i < words.length; i++)
-			wordCounts[ words[i]] = (wordCounts[ words[i].toLowerCase()] || 0) + 1;
+		for(var i = 0; i < words.length; i++){
+				if (words[i].length > 2){
+				wordCounts[ words[i]] = (wordCounts[ words[i].toLowerCase()] || 0) + 1;}
+			
+		}
 		
-		console.log(wordCounts)*/
-		
-
-
-
+		delete (wordCounts[" "])
+		let additionaltext =""
+		for (let i = 0; i<3; i++){
+			var max = Math.max.apply(null,Object.keys(wordCounts).map(function(x){ return wordCounts[x] }));
+			const key = Object.keys(wordCounts).find(key => wordCounts[key] === max);
+			additionaltext += " " + key
+			delete(wordCounts[key])
+		}
+		console.log(additionaltext)
+		/*
 		const mostFrequent = (data) =>
 			data.reduce(
 				(r, c, i, a) => {
@@ -80,14 +88,17 @@ export class DescriptionComponent implements OnInit {
 
 		let this_text = temp.join(" ");
 		console.log(mostFrequent(text));
+		*/
 		let sb = new SearchbarComponent(
 			this.router,
 			this._api,
 			this._spellcheck,
 			this._search
 		);
-		this_text = this._search.query +" 2B"+ this_text
-		sb.externalsearch("Apps", this_text);
+		
+
+		sb.externalsearch("Apps", additionaltext);
+		
 	}
 
 	fetch() {
@@ -116,6 +127,7 @@ export class DescriptionComponent implements OnInit {
 		let temp = this.jsonList.response.docs;
 		if (temp.length > 0) {
 			this.descriptionRaw = temp[0].description;
+			this.score = temp[0].score[0];
 		}
 		this.description = this.descriptionRaw.replace(/\n/g, "<br>");
 	}
