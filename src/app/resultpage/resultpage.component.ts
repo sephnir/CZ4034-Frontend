@@ -45,7 +45,6 @@ export class ResultpageComponent implements OnInit {
 		}
 	}
 
-
 	correctlyspelled() {
 		this.suggestionExist = !this.jsonList.spellcheck.correctlySpelled;
 		this.suggestion = this.jsonList.spellcheck.suggestions[1].suggestion[0].word;
@@ -59,8 +58,8 @@ export class ResultpageComponent implements OnInit {
 		switch (this.category) {
 			case "Apps":
 				urlStr = this.appUrl + this.search;
-				console.log("SEARCHED")
-				console.log(urlStr)
+				console.log("SEARCHED");
+				console.log(urlStr);
 				break;
 			case "Reviews":
 				urlStr =
@@ -70,7 +69,6 @@ export class ResultpageComponent implements OnInit {
 				break;
 		}
 
-		
 		let nextrow = this.currentpage * 10;
 		let previousrow = nextrow - 10;
 		urlStr += `&rows=10&start=${previousrow}`;
@@ -149,7 +147,7 @@ export class ResultpageComponent implements OnInit {
 				this.resultList.push(
 					new appresult(
 						current.id,
-						current.icon[0],
+						current.icon,
 						current.title,
 						current.description,
 						current.genre,
