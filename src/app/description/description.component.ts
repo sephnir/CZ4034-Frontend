@@ -16,6 +16,7 @@ export class DescriptionComponent implements OnInit {
 	jsonList: any;
 	description: string;
 	descriptionRaw: string;
+	score: number;
 
 	constructor(
 		private router: Router,
@@ -100,5 +101,6 @@ export class DescriptionComponent implements OnInit {
 			this.descriptionRaw = temp[0].description;
 		}
 		this.description = this.descriptionRaw.replace(/\n/g, "<br>");
+		this.score = temp[0].score[0];
 	}
 }

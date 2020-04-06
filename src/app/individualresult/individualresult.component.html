@@ -42,7 +42,7 @@
 			<div class="title">
 				<h2>{{ this.resultinstance.title }}</h2>
 			</div>
-			<div class="scrollable card">
+			<div class="content card">
 				<div *ngIf="this.currentTab == 'Reviews'; else notReview">
 					<app-appreview
 						[appId]="this.resultinstance.appId"
