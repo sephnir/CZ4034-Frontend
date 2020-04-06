@@ -69,7 +69,7 @@ export class SearchbarComponent implements OnInit {
 			);
 		} else {
 			this.dict = this._spellcheck.getdict();
-			if (value !== "") {
+			if (value !== "" && this.dict) {
 				value = value.replace(/\s\s+/g, " ");
 				let bagofwords = value.split(" ");
 				this.remainingstring = bagofwords.slice(0, -1).join(" ");

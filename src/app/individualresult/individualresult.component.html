@@ -11,8 +11,8 @@
 				<button
 					[class]="
 						currentTab == 'Apps'
-							? 'navbtn btn btn-primary'
-							: 'navbtn btn btn-secondary'
+							? 'leftdivbtn btn btn-primary'
+							: 'leftdivbtn btn btn-secondary'
 					"
 					(click)="changeTab('Apps')"
 				>
@@ -21,12 +21,19 @@
 				<button
 					[class]="
 						currentTab == 'Reviews'
-							? 'navbtn btn btn-primary'
-							: 'navbtn btn btn-secondary'
+							? 'leftdivbtn btn btn-primary'
+							: 'leftdivbtn btn btn-secondary'
 					"
 					(click)="changeTab('Reviews')"
 				>
 					Reviews
+				</button>
+				<hr />
+				<button
+					class="leftdivbtn btn btn-primary"
+					(click)="similarApps()"
+				>
+					Similar Apps
 				</button>
 			</div>
 		</div>

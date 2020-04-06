@@ -29,9 +29,8 @@ export class DescriptionComponent implements OnInit {
 	}
 
 	/**
-	 * Fetch data from backend
+	 * Find the most frequent string from description
 	 */
-
 	frequent_string() {
 		let textStr = this.descriptionRaw.replace(/[^a-z0-9]+|\s+/gim, " ");
 		textStr = textStr.normalize("NFC");
@@ -40,20 +39,6 @@ export class DescriptionComponent implements OnInit {
 
 		text = st.removeStopwords(text);
 		text = text.filter((item) => item !== "");
-
-		let text1 = text.join(" ")
-
-		/*
-		var wordCounts = { };
-		var words = text1.split(/\b/);
-
-		for(var i = 0; i < words.length; i++)
-			wordCounts[ words[i]] = (wordCounts[ words[i].toLowerCase()] || 0) + 1;
-		
-		console.log(wordCounts)*/
-		
-
-
 
 		const mostFrequent = (data) =>
 			data.reduce(
@@ -72,9 +57,9 @@ export class DescriptionComponent implements OnInit {
 			);
 		let this_text_arr = mostFrequent(text);
 		let temp = [];
-		this_text_arr.forEach(element => {
-			if ((element.length) >= 2){
-				temp.push(element)
+		this_text_arr.forEach((element) => {
+			if (element.length >= 2) {
+				temp.push(element);
 			}
 		});
 
@@ -86,15 +71,13 @@ export class DescriptionComponent implements OnInit {
 			this._spellcheck,
 			this._search
 		);
-		this_text = this._search.query +" 2B"+ this_text
+		this_text = this._search.query + " 2B" + this_text;
 		sb.externalsearch("Apps", this_text);
 	}
 
-	fetch() {
+	fetch(redirect = false) {
 		let urlStr = this.appUrl;
-		this.title = this.title
-			.replace(/([!@#:;,/])/g, " ")
-			.normalize("NFC");
+		this.title = this.title.replace(/([!@#:;,/])/g, " ").normalize("NFC");
 
 		urlStr += `title%3A${this.title}`;
 
@@ -106,10 +89,9 @@ export class DescriptionComponent implements OnInit {
 			() => {
 				console.log(urlStr);
 				this.update();
-				//this.correctlyspelled()
+				if (redirect) this.frequent_string();
 			}
 		);
-		//
 	}
 
 	update() {

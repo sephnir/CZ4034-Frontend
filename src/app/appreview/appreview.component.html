@@ -1,48 +1,96 @@
-
 <div>
-    <div>   
-        <div>
-            <select
-                class="btn btn-secondary dropdown-toggle"
-                (change)="sortArray()"
-                [(ngModel)]="currentselected"
-            >
-                <option
-                    *ngFor="let sortitem of sortingselected"
-                    [value]="sortitem"
-                    >{{ sortitem }}</option
-                >
-            </select>
-        </div>
-    </div>
+	<div class="sortselect">
+		Sort by:
+		<select
+			class="btn btn-secondary dropdown-toggle"
+			(change)="sortArray()"
+			[(ngModel)]="currentselected"
+		>
+			<option
+				*ngFor="let sortitem of sortingselected"
+				[value]="sortitem"
+				>{{ sortitem }}</option
+			>
+		</select>
+	</div>
 
-    <div class="card" *ngFor="let review of reviewInst">
+	<div class="scrollable">
+		<div class="content card" *ngFor="let review of reviewInst">
+			<table class="contenttable">
+				<tr>
+					<td class="profilearea">
+						<img class="profilepic" [src]="review.userImage" />
+					</td>
+					<td class="reviewarea">
+						<div class="name">{{ review.username }}</div>
 
-        <div [ngClass]="{'red-background': review.useful==0, 'green-background': review.useful==1}"   > 
-            {{review.username}}<br />
-            {{review.review}}<br />
-            Review Score: {{review.score}}<br />
-            usefulness: {{review.useful}}<br />
-            sentiment: {{review.sentiment}}<br />
-     
-            <div *ngIf="review.sentiment < 0 " >
-                😠
-            </div>
-            <div *ngIf="review.sentiment > 0 " >
-                😀
-            </div>
-            <div *ngIf="review.sentiment == 0 " >
-                😐
-            </div>
-    
-            <button type="submit" class="btn btn-primary" (click)="frequent_string(review.review)">
-                <span class="fa fa-plus"></span>
-            </button>
-    
-        </div>
-    
-    </div>
+						<div class="d-flex">
+							<div *ngFor="let i of scores">
+								<div *ngIf="review.score > i">
+									<span class="fa fa-star"> </span>
+								</div>
+								<div *ngIf="review.score <= i">
+									<span class="fa fa-star-o"> </span>
+								</div>
+							</div>
+						</div>
+						<hr />
+						<p>
+							{{ review.review }}
+						</p>
+						<hr />
+
+						<table class="footer">
+							<tbody>
+								<td>
+									Sentiment:
+									<div
+										*ngIf="review.sentiment < 0"
+										class="badge badge-pill badge-danger"
+									>
+										😠
+									</div>
+									<div
+										*ngIf="review.sentiment > 0"
+										class="badge badge-pill badge-success"
+									>
+										😀
+									</div>
+									<div
+										*ngIf="review.sentiment == 0"
+										class="badge badge-pill badge-warning"
+									>
+										😐
+									</div>
+								</td>
+								<td>
+									Usefulness:
+									<div
+										*ngIf="review.useful == 0"
+										class="badge badge-pill badge-danger"
+									>
+										Not Informative
+									</div>
+									<div
+										*ngIf="review.useful == 1"
+										class="badge badge-pill badge-success"
+									>
+										Informative
+									</div>
+								</td>
+								<td>
+									<button
+										class="btn btn-primary similar"
+										(click)="frequent_string(review.review)"
+									>
+										Similar Reviews
+									</button>
+								</td>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </div>
-
-
-
