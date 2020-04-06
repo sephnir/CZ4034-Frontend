@@ -55,26 +55,13 @@ export class IndividualresultComponent implements OnInit {
 	 * Action to perform a search on similar apps.
 	 */
 	similarApps() {
-		console.log(this.state);
-		if (this.state == "Reviews") {
-			let sb = new SearchbarComponent(
-				this.router,
-				this._api,
-				this._spellcheck,
-				this._search
-			);
-			sb.externalsearch("Apps", this.resultinstance.title);
-		}
-
-		if (this.state == "Apps") {
-			let dc = new DescriptionComponent(
-				this.router,
-				this._api,
-				this._spellcheck,
-				this._search
-			);
-			dc.title = this.resultinstance.title;
-			dc.fetch(true);
-		}
+		let dc = new DescriptionComponent(
+			this.router,
+			this._api,
+			this._spellcheck,
+			this._search
+		);
+		dc.title = this.resultinstance.title;
+		dc.fetch(true);
 	}
 }
