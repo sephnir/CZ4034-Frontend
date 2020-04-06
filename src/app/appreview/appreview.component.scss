@@ -1,7 +1,49 @@
-.red-background{
-    background-color: red;
-}
-.green-background{
-    background-color: green;
+.sortselect {
+	margin: 10px;
 }
 
+.scrollable {
+	max-height: 400px;
+	overflow: auto;
+
+	.content {
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+
+		.contenttable {
+			width: 100%;
+
+			.profilearea {
+				width: 80px;
+				vertical-align: top;
+				padding: 10px;
+
+				.profilepic {
+					width: 48px;
+					height: 48px;
+					border-radius: 100%;
+				}
+			}
+
+			.reviewarea {
+				vertical-align: top;
+
+				.name {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.footer {
+		width: 100%;
+		text-align: center;
+
+		td {
+			width: 33%;
+			font-size: large;
+			font-weight: bold;
+		}
+	}
+}

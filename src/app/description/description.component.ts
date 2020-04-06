@@ -30,9 +30,8 @@ export class DescriptionComponent implements OnInit {
 	}
 
 	/**
-	 * Fetch data from backend
+	 * Find the most frequent string from description
 	 */
-
 	frequent_string() {
 		let textStr = this.descriptionRaw.replace(/[^a-z0-9]+|\s+/gim, " ");
 		textStr = textStr.normalize("NFC").toLowerCase();
@@ -80,9 +79,9 @@ export class DescriptionComponent implements OnInit {
 			);
 		let this_text_arr = mostFrequent(text);
 		let temp = [];
-		this_text_arr.forEach(element => {
-			if ((element.length) >= 2){
-				temp.push(element)
+		this_text_arr.forEach((element) => {
+			if (element.length >= 2) {
+				temp.push(element);
 			}
 		});
 
@@ -101,11 +100,9 @@ export class DescriptionComponent implements OnInit {
 		
 	}
 
-	fetch() {
+	fetch(redirect = false) {
 		let urlStr = this.appUrl;
-		this.title = this.title
-			.replace(/([!@#:;,/])/g, " ")
-			.normalize("NFC");
+		this.title = this.title.replace(/([!@#:;,/])/g, " ").normalize("NFC");
 
 		urlStr += `title%3A${this.title}`;
 
@@ -117,10 +114,9 @@ export class DescriptionComponent implements OnInit {
 			() => {
 				console.log(urlStr);
 				this.update();
-				//this.correctlyspelled()
+				if (redirect) this.frequent_string();
 			}
 		);
-		//
 	}
 
 	update() {
