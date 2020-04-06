@@ -16,6 +16,14 @@ export class SearchbarComponent implements OnInit {
 	dict: any;
 	remainingstring: string;
 
+	/**
+	 * Constructor for searchbar component.
+	 *
+	 * @param router
+	 * @param _api
+	 * @param _spellcheck
+	 * @param _search
+	 */
 	constructor(
 		private router: Router,
 		private _api: APIservice,
@@ -28,6 +36,11 @@ export class SearchbarComponent implements OnInit {
 		this.jsonList = {};
 	}
 
+	/**
+	 * Updates the searchbar after selecting a suggestion for autocomplete.
+	 *
+	 * @param value String to update the searchbar with
+	 */
 	updatesearch(value: string) {
 		if (this.catstring == "Apps") {
 			this.searchVal = value;
@@ -38,14 +51,22 @@ export class SearchbarComponent implements OnInit {
 		document.getElementById("searchbar").focus();
 	}
 
+	/**
+	 * Strip unsupported special characters and replaces '+' to '2B' from the search string.
+	 *
+	 * @param s String to perform trimming on
+	 */
 	trim(s: string) {
-		//let a = s.replace(/[!@#$%^&:///;,.//*]/g, " ").normalize("NFC");
-		//let a = s.normalize("NFC");
 		let a = s.replace(/([!@#:;,/])/g, " ").normalize("NFC");
-		a = a.replace(' +'," 2B")
+		a = a.replace(" +", " 2B");
 		return a.replace(/\s\s+/g, " ");
 	}
 
+	/**
+	 * Fetch data from solr.
+	 *
+	 * @param value
+	 */
 	fetch(value: string) {
 		if (value === "") {
 			this.suggestionlist = [];
@@ -86,10 +107,10 @@ export class SearchbarComponent implements OnInit {
 	}
 
 	/**
-	 * Update searchVal
+	 * Updates search value and get autocomplete suggestions.
+	 *
 	 * @param event
 	 */
-
 	update(event: any) {
 		this.searchVal = event.target.value;
 
@@ -100,6 +121,13 @@ export class SearchbarComponent implements OnInit {
 			this.fetch(this.searchVal);
 		}
 	}
+
+	/**
+	 * Perform a search without using the search bar. Called from other components.
+	 *
+	 * @param cat Category of the search
+	 * @param query Query of the search
+	 */
 	externalsearch(cat: string, query: string) {
 		this.catstring = cat;
 		this.searchVal = query;
@@ -107,7 +135,7 @@ export class SearchbarComponent implements OnInit {
 	}
 
 	/**
-	 * Validate search field and redirect to result page
+	 * Validate search field and redirect to result page.
 	 */
 	search() {
 		if (this.searchVal == "" || this.searchVal == null) {
@@ -125,7 +153,8 @@ export class SearchbarComponent implements OnInit {
 	}
 
 	/**
-	 * Redirect to result page
+	 * Redirect to result page.
+	 *
 	 * @param uri Route to redirect to
 	 * @param data Additional data
 	 */
@@ -135,10 +164,16 @@ export class SearchbarComponent implements OnInit {
 			.then(() => this.router.navigate(uri, data));
 	}
 
+	/**
+	 * Clears the suggestion list.
+	 */
 	clear() {
 		this.suggestionlist = [];
 	}
 
+	/**
+	 * Called on angular component initialization.
+	 */
 	ngOnInit() {
 		if (this._search.getstate() == null) {
 			this.catstring = this.dropDown[0];

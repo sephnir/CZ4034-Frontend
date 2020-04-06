@@ -11,140 +11,112 @@ import * as st from "stopword";
 	styleUrls: ["./appreview.component.scss"],
 })
 export class AppreviewComponent implements OnInit {
-  @Input() appId: string;
-  state:string;
-  query:string;
-  sortingselected = ["Sentiment","Usefulness","Review Score"];
-  currentselected = this.sortingselected[0];
-  
-  private readonly appUrl = "http://18.141.144.113:8983/solr/appreviews/query?";
-  jsonList: any;
-  
-  reviewInst: reviewinstance[];
-  
-  constructor(private router: Router,private _api: APIservice,private _spellcheck: APIspellcheck,private _search: searchbarhistory)  { 
-	  this.state = _search.getstate();
-	  this.query = _search.getquery();
-  }
+	@Input() appId: string;
+	state: string;
+	query: string;
+	sortingselected = ["Sentiment", "Usefulness", "Review Score"];
+	currentselected = this.sortingselected[0];
 
-  ngOnInit() {
-	this.fetch();}
+	private readonly appUrl =
+		"http://18.141.144.113:8983/solr/appreviews/query?";
+	jsonList: any;
 
-frequent_string(description){
-	
+	reviewInst: reviewinstance[];
 
-	let textStr = description[0].replace(/[^a-z0-9]+|\s+/gim, " ");
-	textStr = textStr.normalize("NFC").toLowerCase();
-
-	let text = textStr.split(" ")
-
-	text = st.removeStopwords(text);
-	text = text.filter((item) => item !== "");
-
-	let text1 = text.join(" ")
-	let additionaltext =""
-
-	if (text1.length > 10){
-		var wordCounts = { };
-		var words = text1.split(/\b/);
-
-		for(var i = 0; i < words.length; i++){
-				if (words[i].length > 2){
-				wordCounts[ words[i]] = (wordCounts[ words[i].toLowerCase()] || 0) + 1;}
-			
-		}
-		
-		delete (wordCounts[" "])
-		for (let i = 0; i<3; i++){
-			var max = Math.max.apply(null,Object.keys(wordCounts).map(function(x){ return wordCounts[x] }));
-			const key = Object.keys(wordCounts).find(key => wordCounts[key] === max);
-			additionaltext += " " + key
-			delete(wordCounts[key])
-		}
-		console.log(additionaltext)
-	}
-	else{
-		additionaltext = text1;
+	/**
+	 * Constructor of appreview component.
+	 *
+	 * @param router
+	 * @param _api
+	 * @param _spellcheck
+	 * @param _search
+	 */
+	constructor(
+		private router: Router,
+		private _api: APIservice,
+		private _spellcheck: APIspellcheck,
+		private _search: searchbarhistory
+	) {
+		this.state = _search.getstate();
+		this.query = _search.getquery();
 	}
 
-	/*
-	description = description[0]
-	let searchterm = ''
-	let textStr = description.replace(/[^a-z0-9]+|\s+/gmi, " ");
-
+	/**
+	 * Called on angular component initialization.
+	 */
 	ngOnInit() {
 		this.fetch();
 	}
 
-	frequent_string(description) {
-		description = description[0];
-		let searchterm = "";
-		let textStr = description.replace(/[^a-z0-9]+|\s+/gim, " ");
+	/**
+	 * Find the top 3 frequent string from review and perform a 'similar review' search.
+	 *
+	 * @param review String to perform the processing on
+	 */
+	frequent_string(review) {
+		let textStr = review[0].replace(/[^a-z0-9]+|\s+/gim, " ");
+		textStr = textStr.normalize("NFC").toLowerCase();
 
-		textStr = textStr.normalize("NFC");
-		textStr = textStr.replace(/(\\n)+/g, " ");
 		let text = textStr.split(" ");
 
 		text = st.removeStopwords(text);
 		text = text.filter((item) => item !== "");
 
-		if (text.length > 10) {
-			const mostFrequent = (data) =>
-				data.reduce(
-					(r, c, i, a) => {
-						r[c] = (r[c] || 0) + 1;
-						r.max = r[c] > r.max ? r[c] : r.max;
-						if (i == a.length - 1) {
-							r = Object.entries(r).filter(
-								([k, v]) => v == r.max && k != "max"
-							);
-							return r.map((x) => x[0]);
-						}
-						return r;
-					},
-					{ max: 0 }
+		let text1 = text.join(" ");
+		let additionaltext = "";
+
+		if (text1.length > 10) {
+			var wordCounts = {};
+			var words = text1.split(/\b/);
+
+			for (var i = 0; i < words.length; i++) {
+				if (words[i].length > 2) {
+					wordCounts[words[i]] =
+						(wordCounts[words[i].toLowerCase()] || 0) + 1;
+				}
+			}
+
+			delete wordCounts[" "];
+			for (let i = 0; i < 3; i++) {
+				var max = Math.max.apply(
+					null,
+					Object.keys(wordCounts).map(function (x) {
+						return wordCounts[x];
+					})
 				);
-			searchterm = mostFrequent(text).join(" ");
+				const key = Object.keys(wordCounts).find(
+					(key) => wordCounts[key] === max
+				);
+				additionaltext += " " + key;
+				delete wordCounts[key];
+			}
+			console.log(additionaltext);
 		} else {
-			searchterm = text.join(" ");
+			additionaltext = text1;
 		}
 
-	if (text.length >  10){
-		const mostFrequent = data => data.reduce((r,c,i,a) => {
-			r[c] = (r[c] || 0) + 1
-			r.max = r[c] > r.max ? r[c] : r.max
-			if(i == a.length-1) {
-			r = Object.entries(r).filter(([k,v]) => v == r.max && k != 'max')
-			return r.map(x => x[0])
-			}
-			return r
-		}, {max: 0})
-		searchterm = mostFrequent(text).join(' ');
-	
+		let sb = new SearchbarComponent(
+			this.router,
+			this._api,
+			this._spellcheck,
+			this._search
+		);
+		sb.externalsearch("Reviews", additionaltext);
 	}
-	else{
-		searchterm = text.join(' ');
-	}*/
-	
-	let sb = new SearchbarComponent(this.router, this._api, this._spellcheck, this._search);
-	sb.externalsearch('Reviews',additionaltext);
-
-}
-  /**
-	 * Fetch data from backend
+	/**
+	 * Fetch data from solr API using app ID.
 	 */
 
 	fetch() {
-    let urlStr = this.appUrl;
-    if (this.state != "Reviews"){
-		  urlStr += `fq=appId%3A${this.appId}&q=*&rows=60`;
-		  console.log('Review query')
-		  console.log(urlStr)
-    }
-    else{ 
-      urlStr += `fq=appId%3A${this.appId}&q=${this.query}&rows=60`;
-    }
-    
+		let urlStr = this.appUrl;
+		if (this.state != "Reviews") {
+			urlStr += `fq=appId%3A${this.appId}&q=*&rows=60`;
+			console.log("Review query");
+			console.log(urlStr);
+		} else {
+			urlStr += `fq=appId%3A${this.appId}&q=${this.query}&rows=60`;
+		}
+
 		this._api.getApps(urlStr).subscribe(
 			(data) => {
 				this.jsonList = data;
@@ -159,10 +131,16 @@ frequent_string(description){
 		);
 	}
 
+	/**
+	 * Extract relevant data after fetching from solr API.
+	 */
 	responseStrip() {
 		this.jsonList = this.jsonList.response.docs;
 	}
 
+	/**
+	 * Perform sorting on the review list depending on which tab is selected.
+	 */
 	sortArray() {
 		switch (this.currentselected) {
 			case "Sentiment":
@@ -190,6 +168,9 @@ frequent_string(description){
 		}
 	}
 
+	/**
+	 * Update fields after fetching from solr API.
+	 */
 	update() {
 		console.log("JSON" + <JSON>this.jsonList);
 		let length = Object.keys(this.jsonList);

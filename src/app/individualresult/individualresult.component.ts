@@ -17,6 +17,14 @@ export class IndividualresultComponent implements OnInit {
 	query: string;
 	state: string;
 
+	/**
+	 * Constructor of individual result component.
+	 *
+	 * @param router
+	 * @param _api
+	 * @param _spellcheck
+	 * @param _search
+	 */
 	constructor(
 		private router: Router,
 		private _api: APIservice,
@@ -27,15 +35,25 @@ export class IndividualresultComponent implements OnInit {
 		this.query = this._search.getstate();
 	}
 
+	/**
+	 * Called on angular component initialization.
+	 */
 	ngOnInit() {
-		//app -> description
-		//review -> review
 		this.currentTab = this.state;
 	}
+
+	/**
+	 * Action to change the current tab.
+	 *
+	 * @param value String of the tab to change to.
+	 */
 	changeTab(value) {
 		this.currentTab = value;
 	}
 
+	/**
+	 * Action to perform a search on similar apps.
+	 */
 	similarApps() {
 		console.log(this.state);
 		if (this.state == "Reviews") {

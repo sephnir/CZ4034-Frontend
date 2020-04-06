@@ -24,6 +24,13 @@ export class ResultpageComponent implements OnInit {
 	pagenum: number;
 	pageRange: number[];
 
+	/**
+	 * Constructor for result page.
+	 *
+	 * @param router
+	 * @param _api
+	 * @param _search
+	 */
 	constructor(
 		private router: Router,
 		private _api: APIservice,
@@ -36,30 +43,22 @@ export class ResultpageComponent implements OnInit {
 		this.pagenum;
 	}
 
-	sortArray() {
-		switch (
-			this.sortingselected
-			//case "Score": this.sortScore(); break;
-			//case "Alphabetical": this.sortAlphabet(); break;
-		) {
-		}
-	}
-
+	/**
+	 * Update suggestion for query if suggestion exists.
+	 */
 	correctlyspelled() {
 		this.suggestionExist = !this.jsonList.spellcheck.correctlySpelled;
 		this.suggestion = this.jsonList.spellcheck.suggestions[1].suggestion[0].word;
 	}
 
 	/**
-	 * Fetch data from backend
+	 * Fetch list of apps from solr API.
 	 */
 	fetch() {
 		let urlStr = "";
 		switch (this.category) {
 			case "Apps":
 				urlStr = this.appUrl + this.search;
-				console.log("SEARCHED");
-				console.log(urlStr);
 				break;
 			case "Reviews":
 				urlStr =
@@ -87,6 +86,9 @@ export class ResultpageComponent implements OnInit {
 		);
 	}
 
+	/**
+	 * Extract relevant data after fetching from solr API.
+	 */
 	responseStrip() {
 		switch (this.category) {
 			case "Apps":
@@ -95,11 +97,13 @@ export class ResultpageComponent implements OnInit {
 			case "Reviews":
 				if (this.jsonList.grouped.appId.groups)
 					this.jsonList = this.jsonList.grouped.appId.groups;
-				console.log(this.jsonList);
 				break;
 		}
 	}
 
+	/**
+	 * Calculate amount of pages from total result count.
+	 */
 	amountofpages() {
 		let remainder = 0;
 		if (this.category == "Apps") {
@@ -113,11 +117,17 @@ export class ResultpageComponent implements OnInit {
 		if (remainder > 0) {
 			this.pagenum += 1;
 		}
-		console.log(this.pagenum);
+
 		this.pageRange = Array.from(Array(this.pagenum).keys()).map(
 			(i) => i + 1
 		);
 	}
+
+	/**
+	 * Redirect to the indicated page number.
+	 *
+	 * @param page Page number to redirect to
+	 */
 	changePage(page) {
 		this.redirectTo(["/resultpage"], {
 			state: {
@@ -126,6 +136,12 @@ export class ResultpageComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * Redirect to the provided uri.
+	 *
+	 * @param uri URI to be redirected to
+	 * @param data Additional parameters to be passed
+	 */
 	redirectTo(uri: string[], data: NavigationExtras) {
 		this.router
 			.navigateByUrl("/", { skipLocationChange: true })
@@ -133,7 +149,7 @@ export class ResultpageComponent implements OnInit {
 	}
 
 	/**
-	 * Update fetched data
+	 * Update fetched data.
 	 */
 	update() {
 		console.log("JSON" + <JSON>this.jsonList);
@@ -177,6 +193,9 @@ export class ResultpageComponent implements OnInit {
 		console.log(this.resultList);
 	}
 
+	/**
+	 * Called on angular component initialization.
+	 */
 	ngOnInit() {
 		this.search = this._search.getquery();
 		this.category = this._search.getstate();
