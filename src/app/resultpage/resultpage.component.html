@@ -15,8 +15,8 @@
 		<p>
 			Displaying results for <b>{{ search }}</b>
 		</p>
-		<p *ngIf="suggestionExist">
-			Do you mean <a>{{ suggestion }}</a
+		<p *ngIf="suggestionExist && this.suggestion">
+			Do you mean <a class="link" (click)="suggestionRedirect()">{{ suggestion }}</a
 			>?
 		</p>
 	</div>

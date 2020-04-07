@@ -23,6 +23,17 @@
 	height: 60px;
 }
 
+.link{
+	text-decoration: none;
+	cursor: pointer;
+	color: blue;
+}
+
+.link:hover{
+	text-decoration: underline;
+	color:navy;
+}
+
 .footer {
 	width: 100%;
 	text-align: center;

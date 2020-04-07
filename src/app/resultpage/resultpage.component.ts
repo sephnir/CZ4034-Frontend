@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { appresult } from "./result.app.model";
 import { Router, NavigationExtras } from "@angular/router";
-import { APIservice, searchbarhistory } from "../api.service";
+import { APIservice, APIspellcheck, searchbarhistory } from "../api.service";
+import { SearchbarComponent } from "../searchbar/searchbar.component";
 
 @Component({
 	selector: "app-resultpage",
@@ -9,20 +10,20 @@ import { APIservice, searchbarhistory } from "../api.service";
 	styleUrls: ["./resultpage.component.scss"],
 })
 export class ResultpageComponent implements OnInit {
+	private 
 	private readonly reviewUrl =
 		"http://18.141.144.113:8983/solr/appreviews/query?q=";
 	private readonly appUrl = "http://18.141.144.113:8983/solr/apps/query?q=";
 	search: string;
 	jsonList: any;
 	resultList: appresult[] = [];
-	sortingmethods: string[];
-	sortingselected: string;
 	suggestionExist: boolean;
 	suggestion: string;
 	category: string;
 	currentpage: number;
 	pagenum: number;
 	pageRange: number[];
+	dict: any;
 
 	/**
 	 * Constructor for result page.
@@ -34,11 +35,11 @@ export class ResultpageComponent implements OnInit {
 	constructor(
 		private router: Router,
 		private _api: APIservice,
-		private _search: searchbarhistory
+		private _search: searchbarhistory,
+		private _spellcheck: APIspellcheck,
+
 	) {
 		this.currentpage = <number>history.state.currentpage;
-		this.sortingmethods = ["Relevance", "Alphabetical", "Score"];
-		this.sortingselected = this.sortingmethods[0];
 		this.suggestionExist = false;
 		this.pagenum;
 	}
@@ -48,7 +49,20 @@ export class ResultpageComponent implements OnInit {
 	 */
 	correctlyspelled() {
 		this.suggestionExist = !this.jsonList.spellcheck.correctlySpelled;
+		if (!(this.suggestionExist || this.jsonList.spellcheck.suggestions[1])) {return}
 		this.suggestion = this.jsonList.spellcheck.suggestions[1].suggestion[0].word;
+	}
+
+
+	suggestionRedirect(){
+			let sb = new SearchbarComponent(
+				this.router,
+				this._api,
+				this._spellcheck,
+				this._search
+			);
+			sb.externalsearch("Apps", this.suggestion);
+		
 	}
 
 	/**
@@ -76,6 +90,8 @@ export class ResultpageComponent implements OnInit {
 			(data) => {
 				this.jsonList = data;
 				this.amountofpages();
+				this.correctlyspelled();
+
 				this.responseStrip();
 			},
 			(err) => console.error(err),
